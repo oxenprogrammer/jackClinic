@@ -26,6 +26,14 @@ const Patient = mongoose.model('Patient', new mongoose.Schema({
         required: true,
         minlength: 6,
         maxlength: 200
+    },
+    dob: {
+        type: Date,
+        required: true
+    },
+    registeredOn: {
+        type: Date,
+        default: Date.now
     }
 }));
 
