@@ -1,0 +1,23 @@
+{
+  "name": "jackclinic",
+  "version": "1.0.0",
+  "description": "JackClinic helps patient to connect to doctors and get treatment at their home",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "doctor",
+    "patient",
+    "home",
+    "care",
+    "heatlh"
+  ],
+  "author": "emmisteel",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.2",
+    "joi": "^13.1.0",
+    "mongoose": "^5.0.2"
+  }
+}
