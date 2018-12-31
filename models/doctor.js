@@ -54,7 +54,8 @@ const Doctor = mongoose.model('Doctor', new mongoose.Schema({
         default: Date.now
     },
     isActive: {
-        type: boolean
+        type: boolean,
+        default: false
     }
 }));
 
