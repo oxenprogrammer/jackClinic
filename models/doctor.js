@@ -54,6 +54,10 @@ const Doctor = mongoose.model('Doctor', new mongoose.Schema({
         minlength: 6,
         maxlength: 200
     },
+    priceRate: {
+        type: Number,
+        required: true
+    },
     registeredOn: {
         type: Date,
         default: Date.now

@@ -29,7 +29,8 @@ router.post('/', async (req, res) => {
       city: req.body.city,
       phone: req.body.phone,
       dob: req.body.dob,
-      password: req.body.password
+      password: req.body.password,
+      priceRate: req.body.priceRate
     });
     doctor = await doctor.save();
     
@@ -46,6 +47,7 @@ router.put('/:id', async (req, res) => {
         city: req.body.city,
         phone: req.body.phone,
         password: req.body.password,
+        priceRate: req.body.priceRate,
         isActive: req.body.isActive
       }, { new: true });
   
