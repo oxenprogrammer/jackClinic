@@ -2,16 +2,18 @@
 const Joi = require('joi');
 const mongoose = require('mongoose');
 
-const Specialization = mongoose.model('Specialization', new mongoose.Schema({
+const specSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
         minlength: 5,
         maxlength: 50,
-        enum: ['Allergist', 'Anesthesiologist', 'Cardiologist',
-         'Neurologist', 'Pediatrician', 'Psychiatrist', 'Gynecologist?']
+        enum: ['Allergist', 'Anesthesiologist', 'Cardiologist', 'Nurse',
+         'Neurologist', 'Pediatrician', 'Psychiatrist', 'Gynecologist', 'Paramedic']
     }
-}));
+});
+
+const Specialization = mongoose.model('Specialization', specSchema);
 
 function validateSpecialization(specialization) {
     const schema = {
@@ -20,5 +22,6 @@ function validateSpecialization(specialization) {
     return Joi.validate(specialization, schema);
 }
 
+exports.specSchema = specSchema;
 exports.Specialization = Specialization;
 exports.validate = validateSpecialization;

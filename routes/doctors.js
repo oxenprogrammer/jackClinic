@@ -1,5 +1,6 @@
 /*jshint esversion: 6 */
 const {Doctor, validate} = require('../models/patient');
+const {Specialization} = require('../models/specialization');
 const mongoose = require('mongoose');
 const router = express.Router;
 
@@ -11,12 +12,19 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
     const { error } = validate(req.body); 
     if (error) return res.status(400).send(error.details[0].message);
+
+    const specialization = await Specialization.findById(req.body.specializationId);
+    if (!specialization) return res.status(400),send('Invalid Specialization.');
   
     let doctor = new Doctor({ 
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       nin: req.body.nin,
       dob: req.body.dob,
+      specialization: {
+          _id: specialization._id,
+          name: specialization.name
+      },
       postalAddress: req.body.postalAddress,
       city: req.body.city,
       phone: req.body.phone,

@@ -1,6 +1,7 @@
 /*jshint esversion: 6 */
 const Joi = require('Joi');
 const mongoose = require('mongoose');
+const { specSchema } = require('./specialization');
 
 const Doctor = mongoose.model('Doctor', new mongoose.Schema({
     firstName: {
@@ -23,6 +24,10 @@ const Doctor = mongoose.model('Doctor', new mongoose.Schema({
     },
     dob: {
         type: Date,
+        required: true
+    },
+    specialization: {
+        type: specSchema,
         required: true
     },
     phone: {
@@ -65,6 +70,7 @@ function validateDoctor(doctor) {
         lastName: Joi.string().min(5).max(30).required(),
         nin: Joi.string().min(14).max(14).required(),
         dob: Joi.required(),
+        specializationId: Joi.string().required(),
         postalAddress: Joi.string().min(5).max(30).required(),
         city: Joi.string().min(4).max(50).required(),
         phone: Joi.string().min(10).max(13).required(),
