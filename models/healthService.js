@@ -50,10 +50,6 @@ const HealthService = mongoose.model('HealthService', new mongoose.Schema({
                 minlength: 14,
                 maxlength: 14
             },
-            dob: {
-                type: Date,
-                required: true
-            },
             phone: {
                 type: String,
                 required: true,
@@ -80,12 +76,21 @@ const HealthService = mongoose.model('HealthService', new mongoose.Schema({
                 type: boolean,
                 default: false
             },
+            everHired: {
+                type: boolean,
+                default: false
+            },
             isActive: {
                 type: boolean,
                 default: false
             }
         }),
         required: true
+    },
+    dateOfService: {
+        type: Date,
+        required: true,
+        default: Date.now
     }
 }));
 

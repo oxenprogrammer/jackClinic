@@ -1,4 +1,6 @@
 /*jshint esversion: 6 */
+const _ = require('lodash');
+const bcrypt = require('bcrypt');
 const {Patient, validate} = require('../models/patient');
 const mongoose = require('mongoose');
 const router = express.Router;
@@ -11,17 +13,23 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
     const { error } = validate(req.body); 
     if (error) return res.status(400).send(error.details[0].message);
-  
-    let patient = new Patient({ 
+
+    let patient = await Patient.findOne({phone: req.body.phone});
+    if (patient) return res.status(409).send('User with this phone number already exist');
+
+    patient = new Patient({ 
       name: req.body.name,
       phone: req.body.phone,
       location: req.body.location,
       dob: req.body.dob,
       password: req.body.password
     });
-    patient = await patient.save();
+    const salt = await bcrypt.genSalt(10);
+    patient.password = await bcrypt.hash(patient.password, salt);
+    await patient.save();
     
-    res.send(patient);
+    res.send(_.pick(patient, 
+        ['name', 'phone', 'location', 'dob']));
 });
 
 router.put('/:id', async (req, res) => {

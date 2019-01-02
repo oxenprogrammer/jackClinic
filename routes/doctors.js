@@ -1,4 +1,6 @@
 /*jshint esversion: 6 */
+const _ = require('lodash');
+const bcrypt = require('bcrypt');
 const {Doctor, validate} = require('../models/patient');
 const {Specialization} = require('../models/specialization');
 const mongoose = require('mongoose');
@@ -15,8 +17,11 @@ router.post('/', async (req, res) => {
 
     const specialization = await Specialization.findById(req.body.specializationId);
     if (!specialization) return res.status(400),send('Invalid Specialization.');
+
+    let doctor = await Doctor.findOne({phone: req.body.phone});
+    if (doctor) return res.status(409).send('Doctor with this phone number already exist');
   
-    let doctor = new Doctor({ 
+    doctor = new Doctor({ 
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       nin: req.body.nin,
@@ -28,13 +33,16 @@ router.post('/', async (req, res) => {
       postalAddress: req.body.postalAddress,
       city: req.body.city,
       phone: req.body.phone,
-      dob: req.body.dob,
       password: req.body.password,
       priceRate: req.body.priceRate
     });
-    doctor = await doctor.save();
+    const salt = await bcrypt.genSalt(10);
+    doctor.password = await bcrypt.hash(doctor.password, salt);
+    await doctor.save();
     
-    res.send(doctor);
+    res.send(_.pick(doctor,
+        ['_id', 'firstName', 'lastName', 'nin', 'dob',
+         'specialization', 'postalAddress', 'city', 'phone', 'priceRate' ]));
 });
 
 router.put('/:id', async (req, res) => {
@@ -48,6 +56,7 @@ router.put('/:id', async (req, res) => {
         phone: req.body.phone,
         password: req.body.password,
         priceRate: req.body.priceRate,
+        isAvailable: req.body.isAvailable,
         isActive: req.body.isActive
       }, { new: true });
   

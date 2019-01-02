@@ -13,7 +13,8 @@ const Patient = mongoose.model('Patient', new mongoose.Schema({
         type: String,
         required: true,
         minlength: 10,
-        maxlength: 13
+        maxlength: 13,
+        unique: true
     },
     location: {
         type: String,

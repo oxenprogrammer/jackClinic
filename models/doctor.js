@@ -62,6 +62,14 @@ const Doctor = mongoose.model('Doctor', new mongoose.Schema({
         type: Date,
         default: Date.now
     },
+    isAvailable: {
+        type: boolean,
+        default: false
+    },
+    everHired: {
+        type: boolean,
+        default: false
+    },
     isActive: {
         type: boolean,
         default: false
@@ -74,7 +82,7 @@ function validateDoctor(doctor) {
         lastName: Joi.string().min(5).max(30).required(),
         nin: Joi.string().min(14).max(14).required(),
         dob: Joi.required(),
-        specializationId: Joi.string().required(),
+        specializationId: Joi.objectId().required(),
         postalAddress: Joi.string().min(5).max(30).required(),
         city: Joi.string().min(4).max(50).required(),
         phone: Joi.string().min(10).max(13).required(),
