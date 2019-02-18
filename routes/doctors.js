@@ -4,7 +4,8 @@ const bcrypt = require('bcrypt');
 const {Doctor, validate} = require('../models/patient');
 const {Specialization} = require('../models/specialization');
 const mongoose = require('mongoose');
-const router = express.Router;
+const express = require('express');
+const router = express.Router();
 
 router.get('/', async (req, res) => {
     const doctors = await Doctor.find().sort('name');

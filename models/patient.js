@@ -1,5 +1,5 @@
 /*jshint esversion: 6 */
-const Joi = require('Joi');
+const Joi = require('joi');
 const mongoose = require('mongoose');
 
 const Patient = mongoose.model('Patient', new mongoose.Schema({
@@ -51,4 +51,3 @@ function validatePatient(patient) {
 
 exports.Patient = Patient;
 exports.validate = validatePatient;
-

@@ -4,6 +4,7 @@ const { Doctor } = require('../models/doctor');
 const { Patient } = require('../models/patient');
 const Fawn = require('fawn');
 const express = require('express');
+const mongoose = require('mongoose');
 const router = express.Router();
 
 Fawn.init(mongoose);

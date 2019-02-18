@@ -1,32 +1,20 @@
 {
   "name": "jackclinic",
   "version": "1.0.0",
-  "description": "JackClinic helps patient to connect to doctors and get treatment at their home",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [
-    "doctor",
-    "patient",
-    "home",
-    "care",
-    "heatlh"
-  ],
-  "author": "emmisteel",
-  "license": "MIT",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "dependencies": {
-    "bcrypt": "^3.0.3",
-    "config": "^3.0.1",
+    "bcrypt": "^3.0.4",
     "express": "^4.16.2",
     "fawn": "^2.1.5",
     "joi": "^13.1.0",
     "joi-objectid": "^2.0.0",
-    "jsonwebtoken": "^8.4.0",
-    "lodash": "^4.17.11",
     "mongoose": "^5.0.2"
-  },
-  "devDependencies": {
-    "babel-eslint": "^10.0.1"
   }
 }

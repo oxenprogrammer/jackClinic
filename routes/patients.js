@@ -3,11 +3,21 @@ const _ = require('lodash');
 const bcrypt = require('bcrypt');
 const {Patient, validate} = require('../models/patient');
 const mongoose = require('mongoose');
-const router = express.Router;
+const express = require('express');
+const router = express.Router();
 
 router.get('/', async (req, res) => {
+
+    const pageSize = +req.query.pagesize;
+    const currentPage = +req.query.page;
     const patients = await Patient.find().sort('name');
-    res.send(patients);
+    if (pageSize && currentPage) {
+        pagePatients = patients.skip(pageSize * (currentPage - 1))
+                .limit(pageSize);
+        res.send(pagePatients);    
+    }else {
+        res.send(patients);
+    }
 });
 
 router.post('/', async (req, res) => {

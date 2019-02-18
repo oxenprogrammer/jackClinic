@@ -73,15 +73,15 @@ const HealthService = mongoose.model('HealthService', new mongoose.Schema({
                 required: true
             },
             isAvailable: {
-                type: boolean,
+                type: Boolean,
                 default: false
             },
             everHired: {
-                type: boolean,
+                type: Boolean,
                 default: false
             },
             isActive: {
-                type: boolean,
+                type: Boolean,
                 default: false
             }
         }),

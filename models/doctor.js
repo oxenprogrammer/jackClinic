@@ -1,5 +1,5 @@
 /*jshint esversion: 6 */
-const Joi = require('Joi');
+const Joi = require('joi');
 const mongoose = require('mongoose');
 const { specSchema } = require('./specialization');
 
@@ -63,15 +63,15 @@ const Doctor = mongoose.model('Doctor', new mongoose.Schema({
         default: Date.now
     },
     isAvailable: {
-        type: boolean,
+        type: Boolean,
         default: false
     },
     everHired: {
-        type: boolean,
+        type: Boolean,
         default: false
     },
     isActive: {
-        type: boolean,
+        type: Boolean,
         default: false
     }
 }));
