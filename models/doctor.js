@@ -78,15 +78,16 @@ const Doctor = mongoose.model('Doctor', new mongoose.Schema({
 
 function validateDoctor(doctor) {
     const schema = {
-        firstName: Joi.string().min(5).max(30).required(),
-        lastName: Joi.string().min(5).max(30).required(),
+        firstName: Joi.string().required(),
+        lastName: Joi.string().required(),
         nin: Joi.string().min(14).max(14).required(),
         dob: Joi.required(),
         specializationId: Joi.objectId().required(),
         postalAddress: Joi.string().min(5).max(30).required(),
         city: Joi.string().min(4).max(50).required(),
         phone: Joi.string().min(10).max(13).required(),
-        password: Joi.string().min(6).max(200).required()
+        password: Joi.string().min(6).max(200).required(),
+        priceRate: Joi.number().required()
     };
     return Joi.validate(doctor, schema);
 }

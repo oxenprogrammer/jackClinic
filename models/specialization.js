@@ -6,8 +6,6 @@ const specSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
-        minlength: 5,
-        maxlength: 50,
         enum: ['Allergist', 'Anesthesiologist', 'Cardiologist', 'Nurse',
          'Neurologist', 'Pediatrician', 'Psychiatrist', 'Gynecologist', 'Paramedic']
     }

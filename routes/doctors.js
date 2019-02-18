@@ -1,14 +1,14 @@
 /*jshint esversion: 6 */
 const _ = require('lodash');
 const bcrypt = require('bcrypt');
-const {Doctor, validate} = require('../models/patient');
+const {Doctor, validate} = require('../models/doctor');
 const {Specialization} = require('../models/specialization');
 const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-    const doctors = await Doctor.find().sort('name');
+    const doctors = await Doctor.find().sort('firstName');
     res.send(doctors);
 });
 
@@ -17,7 +17,7 @@ router.post('/', async (req, res) => {
     if (error) return res.status(400).send(error.details[0].message);
 
     const specialization = await Specialization.findById(req.body.specializationId);
-    if (!specialization) return res.status(400),send('Invalid Specialization.');
+    if (!specialization) return res.status(400).send('Invalid Specialization.');
 
     let doctor = await Doctor.findOne({phone: req.body.phone});
     if (doctor) return res.status(409).send('Doctor with this phone number already exist');
