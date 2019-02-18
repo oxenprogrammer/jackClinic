@@ -31,6 +31,7 @@ router.post('/', async (req, res) => {
           _id: specialization._id,
           name: specialization.name
       },
+      specializationId: req.body.specializationId,
       postalAddress: req.body.postalAddress,
       city: req.body.city,
       phone: req.body.phone,
