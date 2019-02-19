@@ -8,7 +8,7 @@ const mongoose = require('mongoose');
 const router = express.Router();
 
 Fawn.init(mongoose);
-
+ 
 router.get('/', async (req, res) => {
     const healthservices = await HealthService.find().sort('-dateOfService');
     res.send(healthservices);
@@ -31,7 +31,8 @@ router.post('/', async (req, res) => {
             _id: patient._id,
             name: patient.name,
             phone: patient.phone,
-            location: patient.location
+            location: patient.location,
+            dob: patient.dob
         },
         doctor: {
             _id: doctor._id,
@@ -40,26 +41,32 @@ router.post('/', async (req, res) => {
             postalAddress: doctor.postalAddress,
             city: doctor.city,
             priceRate: doctor.priceRate,
-            everHired: doctor.everHired
+            everHired: doctor.everHired,
+            phone: doctor.phone,
+            nin: doctor.nin
         }
     });
-
-    try {
-        new Fawn.Task()
-            .save('healthServices', healthService)
-            .update('doctors', { _id: doctor._id}, {
-                $set: { everHired: true }
-            })
-            .run();
-    } catch (error) {
-        res.status(500).send('Something failed.', error);
-    }
+    healthService = await healthService.save();
+    doctor.everHired === true;
+    doctor.save()
+    res.send(healthService)
+    // try {
+    //     new Fawn.Task()
+    //         .save('healthServices', healthService)
+    //         .update('doctors', { _id: doctor._id}, {
+    //             $set: { everHired: true }
+    //         })
+    //         .run();
+    //         res.status(200).send('successfully booked. ', healthService)
+    // } catch (error) {
+    //     res.status(500).send('Something failed.', error);
+    // }
 });
 
 router.get('/:id', async (req, res) => {
     const healthService = await HealthService.findById(req.params.id);
 
-    if (!healthService) return res.status(404).send('The provided health service was found.');
+    if (!healthService) return res.status(404).send('The provided health service was not found.');
     res.send(healthService);
 });
 
