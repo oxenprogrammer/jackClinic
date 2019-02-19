@@ -46,21 +46,21 @@ router.post('/', async (req, res) => {
             nin: doctor.nin
         }
     });
-    healthService = await healthService.save();
-    doctor.everHired === true;
-    doctor.save()
-    res.send(healthService)
-    // try {
-    //     new Fawn.Task()
-    //         .save('healthServices', healthService)
-    //         .update('doctors', { _id: doctor._id}, {
-    //             $set: { everHired: true }
-    //         })
-    //         .run();
-    //         res.status(200).send('successfully booked. ', healthService)
-    // } catch (error) {
-    //     res.status(500).send('Something failed.', error);
-    // }
+    // healthService = await healthService.save();
+    // doctor.everHired === true;
+    // doctor.save()
+    // res.send(healthService)
+    try {
+        new Fawn.Task()
+            .save('healthServices', healthService)
+            .update('doctors', { _id: doctor._id}, {
+                $set: { everHired: true }
+            })
+            .run();
+            res.send(healthService);
+    } catch (error) {
+        res.send('Something failed.', error);
+    }
 });
 
 router.get('/:id', async (req, res) => {
