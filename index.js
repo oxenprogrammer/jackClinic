@@ -6,6 +6,7 @@ const specializations = require('./routes/specializations');
 const patients = require('./routes/patients');
 const doctors = require('./routes/doctors');
 const healthServices = require('./routes/healthServices');
+const cors = require('cors');
 const express = require('express');
 const app = express();
 
@@ -14,6 +15,7 @@ mongoose.connect('mongodb://localhost/jackclinic')
   .catch(err => console.error('Could not connect to MongoDB...'));
 
 app.use(express.json());
+app.use(cors());
 app.use('/api/specializations', specializations);
 app.use('/api/doctors', doctors);
 app.use('/api/patients', patients);
