@@ -52,7 +52,7 @@ router.post('/', async (req, res) => {
     // res.send(healthService)
     try {
         new Fawn.Task()
-            .save('healthServices', healthService)
+            .save('healthservices', healthService)
             .update('doctors', { _id: doctor._id}, {
                 $set: { everHired: true }
             })
