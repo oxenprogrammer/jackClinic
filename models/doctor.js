@@ -73,7 +73,20 @@ const Doctor = mongoose.model('Doctor', new mongoose.Schema({
     isActive: {
         type: Boolean,
         default: false
+    },
+    isAdmin: {
+        type: Boolean,
+        default: false
     }
+    // roles: {
+    //     type: [
+    //         {
+    //             type: String,
+    //             enum: ['DOCTOR', 'ADMIN']
+    //         }
+    //     ],
+    //     default: ['DOCTOR']
+    // }
 }));
 
 function validateDoctor(doctor) {

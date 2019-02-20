@@ -17,10 +17,10 @@ router.post('/', async (req, res) => {
     if (error) return res.status(400).send(error.details[0].message);
 
     const specialization = await Specialization.findById(req.body.specializationId);
-    if (!specialization) return res.status(400).send('Invalid Specialization.');
+    if (!specialization) return res.status(400).send({'message': 'Invalid Specialization.'});
 
     let doctor = await Doctor.findOne({phone: req.body.phone});
-    if (doctor) return res.status(409).send('Doctor with this phone number already exist');
+    if (doctor) return res.status(409).send({'message': `Doctor with phone number ${req.body.phone} already exist`});
   
     doctor = new Doctor({ 
       firstName: req.body.firstName,
