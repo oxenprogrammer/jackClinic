@@ -6,6 +6,7 @@ const specializations = require('./routes/specializations');
 const patients = require('./routes/patients');
 const doctors = require('./routes/doctors');
 const healthServices = require('./routes/healthServices');
+const auth = require('./routes/auth');
 const cors = require('cors');
 const express = require('express');
 const app = express();
@@ -20,6 +21,7 @@ app.use('/api/specializations', specializations);
 app.use('/api/doctors', doctors);
 app.use('/api/patients', patients);
 app.use('/api/healthservices', healthServices);
+app.use('/api/auth', auth);
 
 const port = process.env.PORT || 4000;
 app.listen(port, () => console.log(`Listening on port ${port}...`));
