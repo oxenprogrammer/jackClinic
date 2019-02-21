@@ -1,7 +1,7 @@
 /*jshint esversion: 6 */
 const _ = require('lodash');
 const bcrypt = require('bcrypt');
-const {Doctor} = require('../models/doctor');
+const {Patient} = require('../models/patient');
 const Joi = require('joi');
 const jwt = require('jsonwebtoken');
 const config = require('config');
@@ -13,13 +13,13 @@ router.post('/', async (req, res) => {
     const { error } = validate(req.body); 
     if (error) return res.status(400).send(error.details[0].message);
 
-    let doctor = await Doctor.findOne({phone: req.body.phone});
-    if (!doctor) return res.status(400).send({'message': `Invalid phone or password`});
+    let patient = await Patient.findOne({phone: req.body.phone});
+    if (!patient) return res.status(400).send({'message': `Invalid phone or password`});
     
-    const validPassword = await bcrypt.compare(req.body.password, doctor.password);
+    const validPassword = await bcrypt.compare(req.body.password, patient.password);
     if (!validPassword) return res.status(400).send({'message': `Invalid phone or password`});
     
-    const token = jwt.sign({ _id: doctor._id, phone: doctor.phone}, config.get('authJWTPrivateKey'));
+    const token = jwt.sign({ _id: patient._id, phone: patient.phone}, config.get('authJWTPrivateKey'));
 
     res.send({'access_token': token});
 });

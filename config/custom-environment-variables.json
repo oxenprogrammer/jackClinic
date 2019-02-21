@@ -1,0 +1,4 @@
+{
+    "authJWTPrivateKey": "authJWTPrivateKey",
+    "loginJWTPrivateKey": "loginJWTPrivateKey"
+}
