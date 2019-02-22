@@ -3,9 +3,6 @@ const _ = require('lodash');
 const bcrypt = require('bcrypt');
 const {Patient} = require('../models/patient');
 const Joi = require('joi');
-const jwt = require('jsonwebtoken');
-const config = require('config');
-const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
 
@@ -19,7 +16,7 @@ router.post('/', async (req, res) => {
     const validPassword = await bcrypt.compare(req.body.password, patient.password);
     if (!validPassword) return res.status(400).send({'message': `Invalid phone or password`});
     
-    const token = jwt.sign({ _id: patient._id, phone: patient.phone}, config.get('authJWTPrivateKey'));
+    const token = patient.generateAuthToken();
 
     res.header('x-auth-token', token).send({'access_token': token});
 });

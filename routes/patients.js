@@ -1,10 +1,7 @@
 /*jshint esversion: 6 */
-const jwt = require('jsonwebtoken');
-const config = require('config');
 const _ = require('lodash');
 const bcrypt = require('bcrypt');
 const {Patient, validate} = require('../models/patient');
-const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
 
@@ -39,8 +36,7 @@ router.post('/', async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     patient.password = await bcrypt.hash(patient.password, salt);
     await patient.save();
-
-    const token = jwt.sign({ _id: patient._id, phone: patient.phone}, config.get('authJWTPrivateKey'));
+    const token = patient.generateAuthToken();
     res.header('x-auth-token', token).send(_.pick(patient, 
         ['name', 'phone', 'location', 'dob']));
 });

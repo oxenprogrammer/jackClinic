@@ -2,8 +2,10 @@
 const Joi = require('joi');
 const mongoose = require('mongoose');
 const { specSchema } = require('./specialization');
+const jwt = require('jsonwebtoken');
+const config = require('config');
 
-const Doctor = mongoose.model('Doctor', new mongoose.Schema({
+const doctorSchema = new mongoose.Schema({
     firstName: {
         type: String,
         required: true,
@@ -87,7 +89,13 @@ const Doctor = mongoose.model('Doctor', new mongoose.Schema({
     //     ],
     //     default: ['DOCTOR']
     // }
-}));
+})
+
+doctorSchema.methods.generateAuthToken = function() {
+    return jwt.sign({ _id: this._id, phone: this.phone}, config.get('authJWTPrivateKey'));
+};
+
+const Doctor = mongoose.model('Doctor', doctorSchema);
 
 function validateDoctor(doctor) {
     const schema = {

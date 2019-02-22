@@ -1,8 +1,10 @@
 /*jshint esversion: 6 */
 const Joi = require('joi');
 const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
+const config = require('config');
 
-const Patient = mongoose.model('Patient', new mongoose.Schema({
+const patientSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
@@ -36,7 +38,14 @@ const Patient = mongoose.model('Patient', new mongoose.Schema({
         type: Date,
         default: Date.now
     }
-}));
+});
+
+patientSchema.methods.generateAuthToken = function() {
+    return jwt.sign({ _id: this._id, phone: this.phone}, config.get('authJWTPrivateKey'));
+};
+
+const Patient = mongoose.model('Patient', patientSchema);
+
 
 function validatePatient(patient) {
     const schema = {
