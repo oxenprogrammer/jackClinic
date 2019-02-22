@@ -21,7 +21,7 @@ router.post('/', async (req, res) => {
     
     const token = jwt.sign({ _id: patient._id, phone: patient.phone}, config.get('authJWTPrivateKey'));
 
-    res.send({'access_token': token});
+    res.header('x-auth-token', token).send({'access_token': token});
 });
 
 function validate(req) {
