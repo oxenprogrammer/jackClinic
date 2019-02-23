@@ -11,6 +11,6 @@ module.exports = function(req, res, next) {
         req.user = decoded;
         next();
     } catch (error) {
-        return res.status(400).send({'message': error });
+        return res.status(400).send({ error });
     }
 }

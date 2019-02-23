@@ -1,11 +1,12 @@
 /*jshint esversion: 6 */
 const _ = require('lodash');
+const auth = require('../middleware/auth'); 
 const bcrypt = require('bcrypt');
-const {Patient, validate} = require('../models/patient');
+const {Patient, validate} = require('../models/patient'); 
 const express = require('express');
 const router = express.Router();
 
-router.get('/', async (req, res) => {
+router.get('/', auth, async (req, res) => {
 
     const pageSize = +req.query.pagesize;
     const currentPage = +req.query.page;
