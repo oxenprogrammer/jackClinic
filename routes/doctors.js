@@ -3,9 +3,15 @@ const _ = require('lodash');
 const bcrypt = require('bcrypt');
 const {Doctor, validate} = require('../models/doctor');
 const {Specialization} = require('../models/specialization');
+const authMiddleware = require('../middleware/authMiddleware');
 const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
+
+router.get('/me', authMiddleware, async (req, res) => {
+    const doctor = await Doctor.findById(req.user._id).select('-password');
+    res.send({'user': doctor}); 
+});
 
 router.get('/', async (req, res) => {
     const doctors = await Doctor.find().sort('firstName');

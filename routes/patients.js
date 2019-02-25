@@ -6,8 +6,12 @@ const {Patient, validate} = require('../models/patient');
 const express = require('express');
 const router = express.Router();
 
-router.get('/', authMiddleware, async (req, res) => {
+router.get('/me', authMiddleware, async (req, res) => {
+    const patient = await Patient.findById(req.user._id).select('-password');
+    res.send({'user': patient}); 
+});
 
+router.get('/', authMiddleware, async (req, res) => {
     const pageSize = +req.query.pagesize;
     const currentPage = +req.query.page;
     const patients = await Patient.find().sort('name');
