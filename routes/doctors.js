@@ -4,7 +4,8 @@ const bcrypt = require('bcrypt');
 const {Doctor, validate} = require('../models/doctor');
 const {Specialization} = require('../models/specialization');
 const authMiddleware = require('../middleware/authMiddleware');
-const mongoose = require('mongoose');
+const admin = require('../middleware/admin');
+const isActive = require('../middleware/isActive');
 const express = require('express');
 const router = express.Router();
 
@@ -13,7 +14,7 @@ router.get('/me', authMiddleware, async (req, res) => {
     res.send({'user': doctor}); 
 });
 
-router.get('/', async (req, res) => {
+router.get('/', authMiddleware, async (req, res) => {
     const doctors = await Doctor.find().sort('firstName');
     res.send(doctors);
 });
@@ -53,7 +54,7 @@ router.post('/', async (req, res) => {
          'specialization', 'postalAddress', 'city', 'phone', 'priceRate' ]));
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', [authMiddleware, isActive], async (req, res) => {
     const { error } = validate(req.body); 
     if (error) return res.status(400).send(error.details[0].message);
   
@@ -73,7 +74,7 @@ router.put('/:id', async (req, res) => {
     res.send(doctor);
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', [authMiddleware, admin], async (req, res) => {
     const doctor = await Doctor.findByIdAndRemove(req.params.id);
   
     if (!doctor) return res.status(404).send('The doctor with the given ID was not found.');
@@ -81,7 +82,7 @@ router.delete('/:id', async (req, res) => {
     res.send(doctor);
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', authMiddleware, async (req, res) => {
 const doctor = await Doctor.findById(req.params.id);
 
 if (!doctor) return res.status(404).send('The doctor with the given ID was not found.');

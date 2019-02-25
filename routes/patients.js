@@ -2,7 +2,9 @@
 const _ = require('lodash');
 const authMiddleware = require('../middleware/authMiddleware'); 
 const bcrypt = require('bcrypt');
-const {Patient, validate} = require('../models/patient'); 
+const {Patient, validate} = require('../models/patient');
+const admin = require('../middleware/admin');
+const isActive = require('../middleware/isActive');
 const express = require('express');
 const router = express.Router();
 
@@ -11,7 +13,7 @@ router.get('/me', authMiddleware, async (req, res) => {
     res.send({'user': patient}); 
 });
 
-router.get('/', authMiddleware, async (req, res) => {
+router.get('/', [authMiddleware, isActive], async (req, res) => {
     const pageSize = +req.query.pagesize;
     const currentPage = +req.query.page;
     const patients = await Patient.find().sort('name');
@@ -46,7 +48,7 @@ router.post('/', async (req, res) => {
         ['name', 'phone', 'location', 'dob']));
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', authMiddleware, async (req, res) => {
     const { error } = validate(req.body); 
     if (error) return res.status(400).send(error.details[0].message);
   
@@ -63,7 +65,7 @@ router.put('/:id', async (req, res) => {
     res.send(patient);
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', [authMiddleware, admin], async (req, res) => {
     const patient = await Patient.findByIdAndRemove(req.params.id);
   
     if (!patient) return res.status(404).send('The patient with the given ID was not found.');
@@ -71,7 +73,7 @@ router.delete('/:id', async (req, res) => {
     res.send(patient);
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', [authMiddleware, isActive], async (req, res) => {
 const patient = await Patient.findById(req.params.id);
 
 if (!patient) return res.status(404).send('The patient with the given ID was not found.');
