@@ -1,6 +1,7 @@
 /*jshint esversion: 6 */
 const _ = require('lodash');
 const bcrypt = require('bcrypt');
+const asyncMiddleware = require('../middleware/async');
 const {Doctor, validate} = require('../models/doctor');
 const {Specialization} = require('../models/specialization');
 const authMiddleware = require('../middleware/authMiddleware');
@@ -9,29 +10,23 @@ const isActive = require('../middleware/isActive');
 const express = require('express');
 const router = express.Router();
 
-router.get('/me', authMiddleware, async (req, res) => {
-    try {
-        const doctor = await Doctor.findById(req.user._id).select('-password');
-        res.send({'user': doctor}); 
-    } catch (error) {
-        res.send({error});
-    }
-});
+router.get('/me', authMiddleware, asyncMiddleware( async (req, res) => {
+    const doctor = await Doctor.findById(req.user._id).select('-password');
+    res.send({'user': doctor}); 
+    })
+);
 
-router.get('/', authMiddleware, async (req, res) => {
-    try {
-        const doctors = await Doctor.find().sort('firstName');
-        res.send(doctors);
-    } catch (error) {
-        res.send({error})
-    }
-});
+router.get('/', authMiddleware, asyncMiddleware( async (req, res) => {
+    const doctors = await Doctor.find().sort('firstName');
+    res.send(doctors);
+    })
+);
 
-router.post('/', async (req, res) => {
+router.post('/', asyncMiddleware( async (req, res) => {
     const { error } = validate(req.body); 
     if (error) return res.status(400).send(error.details[0].message);
 
-    try {
+   
         const specialization = await Specialization.findById(req.body.specializationId);
         if (!specialization) return res.status(400).send({'message': 'Invalid Specialization.'});
 
@@ -61,17 +56,13 @@ router.post('/', async (req, res) => {
         res.send(_.pick(doctor,
             ['_id', 'firstName', 'lastName', 'nin', 'dob',
             'specialization', 'postalAddress', 'city', 'phone', 'priceRate' ]));
-    } catch (error) {
-        res.send({error});
-    }
-  
-});
+    })
+);
 
-router.put('/:id', [authMiddleware, isActive], async (req, res) => {
+router.put('/:id', [authMiddleware, isActive], asyncMiddleware(async (req, res) => {
     const { error } = validate(req.body); 
     if (error) return res.status(400).send(error.details[0].message);
 
-    try {
         const doctor = await Doctor.findByIdAndUpdate(req.params.id,
             { 
               postalAddress: req.body.postalAddress,
@@ -86,32 +77,22 @@ router.put('/:id', [authMiddleware, isActive], async (req, res) => {
         
         if (!doctor) return res.status(404).send('The doctor with the given ID was not found.');
         res.send(doctor);
-    } catch (error) {
-        res.send({error});
-    }
-});
+    })
+);
 
-router.delete('/:id', [authMiddleware, admin], async (req, res) => {
+router.delete('/:id', [authMiddleware, admin], asyncMiddleware(async (req, res) => {
+    const doctor = await Doctor.findByIdAndRemove(req.params.id);
+    if (!doctor) return res.status(404).send('The doctor with the given ID was not found.');
+    res.send(doctor);
+    })
+);
 
-    try {
-        const doctor = await Doctor.findByIdAndRemove(req.params.id);
-        if (!doctor) return res.status(404).send('The doctor with the given ID was not found.');
-        res.send(doctor);
-    } catch (error) {
-        res.send({error});
-    }
-});
-
-router.get('/:id', authMiddleware, async (req, res) => {
-    try {
-        const doctor = await Doctor.findById(req.params.id);
-        if (!doctor) return res.status(404).send('The doctor with the given ID was not found.');
-        res.send(doctor);
-    } catch (error) {
-        res.send({error});
-    }
-
-});
+router.get('/:id', authMiddleware, asyncMiddleware(async (req, res) => {
+    const doctor = await Doctor.findById(req.params.id);
+    if (!doctor) return res.status(404).send('The doctor with the given ID was not found.');
+    res.send(doctor);
+    })
+);
 
 module.exports = router;
 

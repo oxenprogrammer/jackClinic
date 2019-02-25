@@ -1,12 +1,13 @@
 /*jshint esversion: 6 */
 const _ = require('lodash');
 const bcrypt = require('bcrypt');
+const asyncMiddleware = require('../middleware/async');
 const {Doctor} = require('../models/doctor');
 const Joi = require('joi');
 const express = require('express');
 const router = express.Router();
 
-router.post('/', async (req, res) => {
+router.post('/', asyncMiddleware(async (req, res) => {
     const { error } = validate(req.body); 
     if (error) return res.status(400).send(error.details[0].message);
 
@@ -18,7 +19,8 @@ router.post('/', async (req, res) => {
     
     const token = doctor.generateAuthToken();
     res.header('x-auth-token', token).send({'access_token': token});
-});
+    })
+);
 
 function validate(req) {
     const schema = {

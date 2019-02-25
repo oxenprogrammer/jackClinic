@@ -2,6 +2,7 @@
 const { HealthService, validate } = require('../models/healthService');
 const { Doctor } = require('../models/doctor');
 const { Patient } = require('../models/patient');
+const asyncMiddleware = require('../middleware/async');
 const Fawn = require('fawn');
 const express = require('express');
 const mongoose = require('mongoose');
@@ -9,12 +10,13 @@ const router = express.Router();
 
 Fawn.init(mongoose);
  
-router.get('/', async (req, res) => {
+router.get('/', asyncMiddleware(async (req, res) => {
     const healthservices = await HealthService.find().sort('-dateOfService');
     res.send(healthservices);
-});
+    })
+);
 
-router.post('/', async (req, res) => {
+router.post('/', asyncMiddleware(async (req, res) => {
     const { error } = validate(req.body);
     if (error) return res.status(400).send(error.details[0].message);
 
@@ -46,28 +48,22 @@ router.post('/', async (req, res) => {
             nin: doctor.nin
         }
     });
-    // healthService = await healthService.save();
-    // doctor.everHired === true;
-    // doctor.save()
-    // res.send(healthService)
-    try {
-        new Fawn.Task()
-            .save('healthservices', healthService)
-            .update('doctors', { _id: doctor._id}, {
-                $set: { everHired: true }
-            })
-            .run();
-            res.send(healthService);
-    } catch (error) {
-        res.send('Something failed.', error);
-    }
-});
 
-router.get('/:id', async (req, res) => {
+    new Fawn.Task()
+        .save('healthservices', healthService)
+        .update('doctors', { _id: doctor._id}, {
+            $set: { everHired: true }
+        })
+        .run();
+    res.send(healthService);  
+    })
+);
+
+router.get('/:id', asyncMiddleware(async (req, res) => {
     const healthService = await HealthService.findById(req.params.id);
-
     if (!healthService) return res.status(404).send('The provided health service was not found.');
     res.send(healthService);
-});
+    })
+);
 
 module.exports = router;

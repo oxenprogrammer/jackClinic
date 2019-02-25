@@ -9,6 +9,7 @@ const healthServices = require('./routes/healthServices');
 const config = require('config');
 const auth = require('./routes/auth');
 const login = require('./routes/login');
+const error = require('./middleware/error');
 const cors = require('cors');
 const express = require('express');
 const app = express();
@@ -30,6 +31,8 @@ app.use('/api/patients', patients);
 app.use('/api/healthservices', healthServices);
 app.use('/api/auth', auth);
 app.use('/api/login', login);
+
+app.use(error);
 
 const port = process.env.PORT || 4000;
 app.listen(port, () => console.log(`Listening on port ${port}...`));

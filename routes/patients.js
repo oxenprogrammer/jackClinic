@@ -1,6 +1,7 @@
 /*jshint esversion: 6 */
 const _ = require('lodash');
 const authMiddleware = require('../middleware/authMiddleware'); 
+const asyncMiddleware = require('../middleware/async');
 const bcrypt = require('bcrypt');
 const {Patient, validate} = require('../models/patient');
 const admin = require('../middleware/admin');
@@ -8,37 +9,30 @@ const isActive = require('../middleware/isActive');
 const express = require('express');
 const router = express.Router();
 
-router.get('/me', authMiddleware, async (req, res) => {
-    try {
-        const patient = await Patient.findById(req.user._id).select('-password');
-        res.send({'user': patient}); 
-    } catch (error) {
-        res.send({error});
-    }
-});
+router.get('/me', authMiddleware, asyncMiddleware(async (req, res) => {
+    const patient = await Patient.findById(req.user._id).select('-password');
+    res.send({'user': patient}); 
+    })
+);
 
-router.get('/', [authMiddleware, isActive], async (req, res) => {
-    try {
-        const pageSize = +req.query.pagesize;
-        const currentPage = +req.query.page;
-        const patients = await Patient.find().sort('name');
-        if (pageSize && currentPage) {
-            pagePatients = patients.skip(pageSize * (currentPage - 1))
-                    .limit(pageSize);
-            res.send(pagePatients);    
-        }else {
-            res.send(patients);
-        } 
-    } catch (error) {
-        res.send({error});
+router.get('/', [authMiddleware, isActive], asyncMiddleware(async (req, res) => {
+    const pageSize = +req.query.pagesize;
+    const currentPage = +req.query.page;
+    const patients = await Patient.find().sort('name');
+    if (pageSize && currentPage) {
+        pagePatients = patients.skip(pageSize * (currentPage - 1))
+                .limit(pageSize);
+        res.send(pagePatients);    
+    }else {
+        res.send(patients);
     } 
-});
+    })
+);
 
-router.post('/', async (req, res) => {
+router.post('/', asyncMiddleware(async (req, res) => {
     const { error } = validate(req.body); 
     if (error) return res.status(400).send(error.details[0].message);
 
-    try {
         let patient = await Patient.findOne({phone: req.body.phone});
         if (patient) return res.status(409).send('User with this phone number already exist');
 
@@ -56,16 +50,13 @@ router.post('/', async (req, res) => {
         const token = patient.generateAuthToken();
         res.header('x-auth-token', token).send(_.pick(patient, 
             ['name', 'phone', 'location', 'dob']));
-    } catch (error) {
-        res.send({error});
-    }
-});
+    })
+);
 
-router.put('/:id', authMiddleware, async (req, res) => {
+router.put('/:id', authMiddleware, asyncMiddleware(async (req, res) => {
     const { error } = validate(req.body); 
     if (error) return res.status(400).send(error.details[0].message);
 
-    try {
         const patient = await Patient.findByIdAndUpdate(req.params.id,
             { 
               name: req.body.name,
@@ -77,30 +68,22 @@ router.put('/:id', authMiddleware, async (req, res) => {
           if (!patient) return res.status(404).send('The patient with the given ID was not found.');
           
           res.send(patient);
-    } catch (error) {
-        res.send({error});
-    }
-});
+    })
+);
 
-router.delete('/:id', [authMiddleware, admin], async (req, res) => {
-    try {
-        const patient = await Patient.findByIdAndRemove(req.params.id);
-        if (!patient) return res.status(404).send('The patient with the given ID was not found.');
-        res.send(patient);
-    } catch (error) {
-        res.send({error});
-    }
-});
+router.delete('/:id', [authMiddleware, admin], asyncMiddleware(async (req, res) => {
+    const patient = await Patient.findByIdAndRemove(req.params.id);
+    if (!patient) return res.status(404).send('The patient with the given ID was not found.');
+    res.send(patient);
+    })
+);
 
-router.get('/:id', [authMiddleware, isActive], async (req, res) => {
-    try {
-        const patient = await Patient.findById(req.params.id);
-        if (!patient) return res.status(404).send('The patient with the given ID was not found.');
-        res.send(patient);
-    } catch (error) {
-        res.send({error});
-    }
-});
+router.get('/:id', [authMiddleware, isActive], asyncMiddleware(async (req, res) => {
+    const patient = await Patient.findById(req.params.id);
+    if (!patient) return res.status(404).send('The patient with the given ID was not found.');
+    res.send(patient);
+    })
+);
 
 module.exports = router;
 
