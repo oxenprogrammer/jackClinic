@@ -1,4 +1,6 @@
 /*jshint esversion: 6 */
+const winston = require('winston');
+require('winston-mongodb');
 const Joi = require('joi');
 Joi.objectId = require('joi-objectid')(Joi);
 const mongoose = require('mongoose');
@@ -13,6 +15,9 @@ const error = require('./middleware/error');
 const cors = require('cors');
 const express = require('express');
 const app = express();
+
+winston.add(winston.transports.File, {filename: 'logfile.log'});
+// winston.add(winston.transports.MongoDB, {db: 'mongodb://localhost/jackclinic'});
 
 if (!config.get('authJWTPrivateKey')) {
   console.error('FATAL ERROR: authJWTPrivateKey not set');
