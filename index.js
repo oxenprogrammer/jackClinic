@@ -17,7 +17,7 @@ const express = require('express');
 const app = express();
 
 winston.add(winston.transports.File, {filename: 'logfile.log'});
-// winston.add(winston.transports.MongoDB, {db: 'mongodb://localhost/jackclinic'});
+winston.add(winston.transports.MongoDB, {db: 'mongodb://localhost/jackclinic', level: 'warn'});
 
 if (!config.get('authJWTPrivateKey')) {
   console.error('FATAL ERROR: authJWTPrivateKey not set');
