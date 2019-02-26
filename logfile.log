@@ -5,3 +5,17 @@
 {"message":"Booo","stack":"Error: Booo\n    at Object.<anonymous> (/home/emmisteel/Documents/Angularjs/jackClinic/index.js:32:7)\n    at Module._compile (module.js:660:30)\n    at Object.Module._extensions..js (module.js:671:10)\n    at Module.load (module.js:573:32)\n    at tryModuleLoad (module.js:513:12)\n    at Function.Module._load (module.js:505:3)\n    at Function.Module.runMain (module.js:701:10)\n    at startup (bootstrap_node.js:193:16)\n    at bootstrap_node.js:617:3","level":"error","timestamp":"2019-02-26T07:01:24.250Z"}
 {"message":"Booom!!!!!!!!!!!!","stack":"Error: Booom!!!!!!!!!!!!\n    at Object.<anonymous> (/home/emmisteel/Documents/Angularjs/jackClinic/index.js:32:7)\n    at Module._compile (module.js:660:30)\n    at Object.Module._extensions..js (module.js:671:10)\n    at Module.load (module.js:573:32)\n    at tryModuleLoad (module.js:513:12)\n    at Function.Module._load (module.js:505:3)\n    at Function.Module.runMain (module.js:701:10)\n    at startup (bootstrap_node.js:193:16)\n    at bootstrap_node.js:617:3","level":"error","timestamp":"2019-02-26T07:01:28.535Z"}
 {"message":"Booom!!!!!!!!!!!!","stack":"Error: Booom!!!!!!!!!!!!\n    at Object.<anonymous> (/home/emmisteel/Documents/Angularjs/jackClinic/index.js:32:7)\n    at Module._compile (module.js:660:30)\n    at Object.Module._extensions..js (module.js:671:10)\n    at Module.load (module.js:573:32)\n    at tryModuleLoad (module.js:513:12)\n    at Function.Module._load (module.js:505:3)\n    at Function.Module.runMain (module.js:701:10)\n    at startup (bootstrap_node.js:193:16)\n    at bootstrap_node.js:617:3","level":"error","timestamp":"2019-02-26T07:01:30.661Z"}
+{"level":"info","message":"","timestamp":"2019-02-26T08:29:55.792Z"}
+{"meta":"","level":"info","message":"","timestamp":"2019-02-26T08:30:11.233Z"}
+{"level":"info","message":"Connected to Mongo","timestamp":"2019-02-26T08:30:19.349Z"}
+{"level":"info","message":"Connected to MongoDB","timestamp":"2019-02-26T08:30:22.008Z"}
+{"level":"info","message":"Connected to MongoDB . . .","timestamp":"2019-02-26T08:30:24.169Z"}
+{"level":"info","message":"Connected to MongoDB . . .","timestamp":"2019-02-26T08:30:26.464Z"}
+{"level":"info","message":"Connected to MongoDB . . .","timestamp":"2019-02-26T08:30:29.593Z"}
+{"level":"info","message":"Connected to MongoDB . . .","timestamp":"2019-02-26T08:30:31.931Z"}
+{"level":"info","message":"Connected to MongoDB . . .","timestamp":"2019-02-26T08:30:36.806Z"}
+{"level":"info","message":"Connected to MongoDB . . .","timestamp":"2019-02-26T08:30:38.883Z"}
+{"level":"info","message":"Connected to MongoDB . . .","timestamp":"2019-02-26T08:30:52.639Z"}
+{"level":"info","message":"Connected to MongoDB . . .","timestamp":"2019-02-26T08:31:55.355Z"}
+{"level":"info","message":"Connected to MongoDB . . .","timestamp":"2019-02-26T08:32:29.820Z"}
+{"level":"info","message":"Connected to MongoDB . . .","timestamp":"2019-02-26T08:32:33.980Z"}
