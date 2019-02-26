@@ -3,7 +3,8 @@ const winston = require('winston');
 const mongoose = require('mongoose');
 
 module.exports = async () => {
-    await mongoose.connect('mongodb://localhost/jackclinic');
+    mongoose.set('useCreateIndex', true);
+    await mongoose.connect('mongodb://localhost/jackclinic', { useNewUrlParser: true });
     winston.info('Connected to MongoDB . . .');
 }
 
