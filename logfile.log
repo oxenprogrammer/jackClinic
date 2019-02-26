@@ -95,3 +95,5 @@
 {"level":"info","message":"Connected to MongoDB . . .","timestamp":"2019-02-26T09:01:33.869Z"}
 {"level":"info","message":"Listening on port 4000...","timestamp":"2019-02-26T09:03:07.804Z"}
 {"level":"info","message":"Connected to MongoDB . . .","timestamp":"2019-02-26T09:03:07.870Z"}
+{"level":"info","message":"Listening on port 4000...","timestamp":"2019-02-26T09:04:38.204Z"}
+{"level":"info","message":"Connected to MongoDB . . .","timestamp":"2019-02-26T09:04:38.264Z"}
