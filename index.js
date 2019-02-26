@@ -16,6 +16,11 @@ const cors = require('cors');
 const express = require('express');
 const app = express();
 
+process.on('uncaughtException', (error) => {
+  console.log('SOMETHING WENT WRONG');
+  winston.error(error.message, error);
+});
+
 winston.add(winston.transports.File, {filename: 'logfile.log'});
 winston.add(winston.transports.MongoDB, {db: 'mongodb://localhost/jackclinic', level: 'warn'});
 
