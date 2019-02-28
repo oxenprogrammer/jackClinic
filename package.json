@@ -29,6 +29,7 @@
   },
   "devDependencies": {
     "@types/node": "^11.9.5",
-    "jest": "^24.1.0"
+    "jest": "^24.1.0",
+    "supertest": "^3.4.2"
   }
 }
