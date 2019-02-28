@@ -1,6 +1,6 @@
 /*jshint esversion: 6 */
 const winston = require('winston');
-require('winston-mongodb');
+// require('winston-mongodb');
 
 module.exports = () => {
     winston.handleExceptions(
@@ -13,5 +13,5 @@ module.exports = () => {
     });
       
     winston.add(winston.transports.File, {filename: 'logfile.log'});
-    winston.add(winston.transports.MongoDB, {db: 'mongodb://localhost/jackclinic', level: 'warn'});
+    // winston.add(winston.transports.MongoDB, {db: 'mongodb://localhost/jackclinic', level: 'warn'});
 }
