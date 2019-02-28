@@ -24,6 +24,7 @@
     "winston-mongodb": "^3.0.0"
   },
   "devDependencies": {
+    "@types/node": "^11.9.5",
     "jest": "^24.1.0"
   }
 }
