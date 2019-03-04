@@ -38,4 +38,11 @@ describe('/api/specializations', () => {
             expect(res.body).toHaveProperty('name', specialization.name);
         });
     });
+
+    describe('GET /:id', async () => {
+        it('should return 404 for non existence id',  async () => {
+            const res = await request(server).get('/api/specializations/' + 1);
+            expect(res.status).toBe(404);
+        });
+    });
 });
