@@ -1,3 +1,4 @@
+/*jshint esversion: 6 */
 const { Doctor } = require('../../../models/doctor');
 const jwt = require('jsonwebtoken');
 const config = require('config');
