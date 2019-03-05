@@ -2,3 +2,4 @@
 /config
 /logfile.log
 /uncaughtExceptions.log
+/coverage

@@ -5,6 +5,7 @@ const asyncMiddleware = require('../middleware/async');
 const {Doctor, validate} = require('../models/doctor');
 const {Specialization} = require('../models/specialization');
 const authMiddleware = require('../middleware/authMiddleware');
+const validateObjectId = require('../middleware/validateObjectId');
 const admin = require('../middleware/admin');
 const isActive = require('../middleware/isActive');
 const express = require('express');
@@ -87,7 +88,7 @@ router.delete('/:id', [authMiddleware, admin], asyncMiddleware(async (req, res) 
     })
 );
 
-router.get('/:id', authMiddleware, asyncMiddleware(async (req, res) => {
+router.get('/:id', authMiddleware, validateObjectId, asyncMiddleware(async (req, res) => {
     const doctor = await Doctor.findById(req.params.id);
     if (!doctor) return res.status(404).send('The doctor with the given ID was not found.');
     res.send(doctor);

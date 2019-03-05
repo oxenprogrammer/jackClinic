@@ -3,6 +3,7 @@ const { Specialization, validate } = require('../models/specialization');
 const asyncMiddleware = require('../middleware/async');
 const express = require('express');
 const router = express.Router();
+const validateObjectId = require('../middleware/validateObjectId');
 
 router.get('/', asyncMiddleware(async (req, res) => {
   const specializations = await Specialization.find().sort('name');
@@ -44,7 +45,7 @@ router.delete('/:id', asyncMiddleware(async (req, res) => {
   })
 );
 
-router.get('/:id', asyncMiddleware(async (req, res) => {
+router.get('/:id', validateObjectId, asyncMiddleware(async (req, res) => {
   const specialization = await Specialization.findById(req.params.id);
 
   if (!specialization) return res.status(404).send('The Specialization with the given ID was not found.');

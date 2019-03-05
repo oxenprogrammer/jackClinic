@@ -1,12 +1,13 @@
+/*jshint esversion: 6 */
 let server;
 const request = require('supertest');
 const { Specialization }  = require('../../models/specialization');
 
 describe('/api/specializations', () => {
-    beforeEach(() => { server = require('../../index') });
+    beforeEach(() => { server = require('../../index'); });
     afterEach( async () => { 
         server.close();
-        await Specialization.remove({})
+        await Specialization.remove({});
      }
     );
 
@@ -36,6 +37,13 @@ describe('/api/specializations', () => {
             expect(res.status).toBe(200);
             // expect(res.body).toMatchObject(specialization);
             expect(res.body).toHaveProperty('name', specialization.name);
+        });
+    });
+
+    describe('GET /:id', async () => {
+        it('should return 404 for non existence id',  async () => {
+            const res = await request(server).get('/api/specializations/' + 1);
+            expect(res.status).toBe(404);
         });
     });
 });
