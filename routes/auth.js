@@ -2,7 +2,8 @@
 const _ = require('lodash');
 const bcrypt = require('bcrypt');
 const asyncMiddleware = require('../middleware/async');
-const {Doctor} = require('../models/doctor');
+const { Doctor } = require('../models/doctor');
+const { Patient } = require('../models/patient');
 const Joi = require('joi');
 const express = require('express');
 const router = express.Router();
@@ -12,13 +13,25 @@ router.post('/', asyncMiddleware(async (req, res) => {
     if (error) return res.status(400).send(error.details[0].message);
 
     let doctor = await Doctor.findOne({phone: req.body.phone});
-    if (!doctor) return res.status(400).send({'message': `Invalid phone or password`});
-    
-    const validPassword = await bcrypt.compare(req.body.password, doctor.password);
-    if (!validPassword) return res.status(400).send({'message': `Invalid phone or password`});
-    
-    const token = doctor.generateAuthToken();
-    res.header('x-auth-token', token).send({'access_token': token});
+    let patient = await Patient.findOne({phone: req.body.phone});
+
+    let validPassword;
+    let token;
+
+    if(doctor) {
+        validPassword = await bcrypt.compare(req.body.password, doctor.password);
+        if (!validPassword) return res.status(400).send({'message': `Invalid phone or password`});
+        token = doctor.generateAuthToken();
+        res.header('x-auth-token', token).send({'access_token': token});
+    } else if (patient) {
+        validPassword = await bcrypt.compare(req.body.password, patient.password);
+        if (!validPassword) return res.status(400).send({'message': `Invalid phone or password`});
+        token = patient.generateAuthToken();
+        res.header('x-auth-token', token).send({'access_token': token});
+    } else {
+        return res.status(400).send({'message': `Invalid phone or password`});
+    }
+
     })
 );
 
