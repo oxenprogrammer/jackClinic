@@ -44,6 +44,25 @@ describe('/api/patient', () => {
         })
     })
 
+    describe('GET /id', async () => {
+        it('should return 404 for non existence patient', async () => {
+            const id = new mongoose.Types.ObjectId();
+            const payload = {
+                isActive: true,
+                isAdmin: false
+            };
+            const doctor = new Doctor(payload);
+            const token = doctor.generateAuthToken();
+            const res = await request(server).get('/api/patients' + id)
+                .set('x-auth-token', token);
+            expect(res.status).toBe(404);
+
+        });
+
+        //TODO
+        //it should return 200 for patient with the given id
+    });
+
     describe('GET /me', async () => {
         it('should return 401 for unauthenticated access', async () => {
             const id = mongoose.Types.ObjectId();
