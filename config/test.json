@@ -1,0 +1,4 @@
+{
+    "authJWTPrivateKey": "123456",
+    "db": "mongodb://localhost/jackclinic_test"
+}
