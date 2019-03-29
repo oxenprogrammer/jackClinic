@@ -35,6 +35,8 @@ router.post('/', asyncMiddleware( async (req, res) => {
         if (doctor) return res.status(409).send({'message': `Doctor with phone number ${req.body.phone} already exist`});
 
         doctor = new Doctor({ 
+            imageURL: req.body.imageURL,
+            imageId: req.body.imageId,
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             nin: req.body.nin,

@@ -6,6 +6,12 @@ const jwt = require('jsonwebtoken');
 const config = require('config');
 
 const doctorSchema = new mongoose.Schema({
+    imageURL: {
+        type: String
+    },
+    imageId: {
+        type: String
+    },
     firstName: {
         type: String,
         required: true,
@@ -99,6 +105,8 @@ const Doctor = mongoose.model('Doctor', doctorSchema);
 
 function validateDoctor(doctor) {
     const schema = {
+        imageURL: Joi.string(),
+        imageId: Joi.string(),
         firstName: Joi.string().required(),
         lastName: Joi.string().required(),
         nin: Joi.string().min(14).max(14).required(),
