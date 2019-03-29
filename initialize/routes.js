@@ -3,6 +3,7 @@ const express = require('express');
 const specializations = require('../routes/specializations');
 const patients = require('../routes/patients');
 const doctors = require('../routes/doctors');
+const upload = require('../routes/upload');
 const healthServices = require('../routes/healthServices');
 const auth = require('../routes/auth');
 const login = require('../routes/login');
@@ -18,5 +19,6 @@ module.exports = function(app) {
     app.use('/api/healthservices', healthServices);
     app.use('/api/auth', auth);
     app.use('/api/login', login);
+    app.use('/api/upload', upload);
     app.use(error);
 };
