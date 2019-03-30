@@ -1,0 +1,16 @@
+.cascading-admin-card{
+    padding: 15px !important;
+}
+.user-content{
+    padding: 15px;
+    text-align: center;
+}
+.photo{
+    text-align: center;
+}
+.photo img{
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+
+}

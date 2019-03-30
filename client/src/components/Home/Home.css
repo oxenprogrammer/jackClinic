@@ -1,0 +1,213 @@
+
+/* .home {
+    width: 100%;
+    height: 100%;
+   
+    background-image: url('../../assets/images/home.jpeg');
+    background-size: cover;
+    background-position: center center;
+    z-index: -1;
+    position: fixed;
+    top: 0; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} */
+
+/* .card{
+    padding-top: 30px !important;
+} */
+/* body { padding-top: 70px; }
+@media screen and (max-width: 768px) {
+    body { padding-top: 0px; }
+} */
+
+header.landing {
+    padding-top: 10rem;
+    padding-bottom: calc(10rem - 72px);
+    background-image: url('../../assets/images/home.jpeg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-size: cover;
+  }
+
+/* header.landing:before { 
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    z-index: 0; 
+}
+header.landing:before { 
+    content: '';
+    background: transparent url('../../assets/images/pattern.png') repeat top left; 
+} */
+  
+  header.landing h1 {
+    font-size: 2.25rem;
+  }
+  
+  @media (min-width: 992px) {
+    header.landing {
+      height: 100vh;
+      min-height: 40rem;
+      padding-top: 72px;
+      padding-bottom: 0;
+    }
+    header.landing p {
+      font-size: 1.15rem;
+    }
+    header.landing h1 {
+      font-size: 3rem;
+    }
+  }
+  
+  @media (min-width: 1200px) {
+    header.landing h1 {
+      font-size: 3.5rem;
+    }
+  }
+
+  .fullheight{
+      height: 100% !important;
+  }
+
+  .align-items-center {
+    -webkit-box-align: center !important;
+    -ms-flex-align: center !important;
+    align-items: center !important;
+  }
+
+  .justify-content-center {
+    -webkit-box-pack: center !important;
+    -ms-flex-pack: center !important;
+    justify-content: center !important;
+  }
+  .text-center {
+    text-align: center !important;
+  }
+
+  .align-self-end {
+    -ms-flex-item-align: end !important;
+    align-self: flex-end !important;
+  }
+
+  .text-uppercase {
+    text-transform: uppercase !important;
+  }
+  .text-white {
+    color: #fff !important;
+  }
+  hr.divider {
+    /* max-width: 3.25rem; */
+    border-width: 0.2rem;
+    border-color: #f4623a;
+  }
+
+  .align-self-baseline {
+    -ms-flex-item-align: baseline !important;
+    align-self: baseline !important;
+  }
+  
+  .align-self-stretch {
+    -ms-flex-item-align: stretch !important;
+    align-self: stretch !important;
+  }
+
+
+  /* Buttons */
+  .btn-primary {
+    color: #fff;
+    background-color: #f4623a;
+    border-color: #f4623a;
+  }
+  
+  .btn-primary:hover {
+    color: #fff;
+    background-color: #f24516;
+    border-color: #ee3e0d;
+  }
+  
+  .btn-primary:focus, .btn-primary.focus {
+    -webkit-box-shadow: 0 0 0 0.2rem rgba(246, 122, 88, 0.5);
+    box-shadow: 0 0 0 0.2rem rgba(246, 122, 88, 0.5);
+  }
+
+  .btn-xl {
+    padding: 1.25rem 2.25rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 10rem;
+  }
+  
+  
+  
+
+
+
+
+
+/* .membership-image-ribbon{background-color: rgba(0,118,206,.7);
+  box-sizing: border-box;
+  height: 125px;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  top: 400px; 
+  width: 100%;} */
+
+  .membership-image-ribbon{background-color: rgba(0,0,0,.4);
+  border-style: none;
+  border-width: 0;
+  bottom: 1px;
+  box-sizing: border-box;
+  height: 110px;
+  left: 0;
+  line-height: 1.4em;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  text-align: left;
+  width: 100%;}
+
+  .membership-image-ribbon p{
+    box-sizing: border-box;
+  color: #fff;
+  font-family: Nexa,Helvetica,Arial,sans-serif;
+  font-size: 40px;
+  font-weight: lighter;
+  margin: 0;
+  padding: 20px 0 0;
+  position: absolute;
+  top: 16px;
+  }
+
+  .stats, .more-info {
+    padding: 60px 0;
+  }
+
+  .stat-fa .fa{
+    font-size: 75px !important;
+  }
+
+  
+  /* .stats h4{
+    padding: 0;
+  
+    font-weight: 700;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 2rem;
+    color: #fff;
+    background-color: #f24516;
+    border-color: #ee3e0d;
+    
+  }
+  .stats .pill{
+    width: 150px;
+    margin: 0 auto ;
+  } */
