@@ -69,6 +69,8 @@ class Login extends Component {
                     title: 'Phone number and password error'
                   })
             } else{
+                // console.log(res.body);
+                
                 sessionStorage.removeItem('userid')
                 sessionStorage.removeItem('username')
                 sessionStorage.removeItem('usertoken')

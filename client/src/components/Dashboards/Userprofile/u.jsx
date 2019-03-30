@@ -3,6 +3,8 @@ import { MDBContainer, MDBBtn, MDBModal, MDBModalBody, MDBModalHeader, MDBModalF
 import { MDBRow, MDBCol, MDBInput } from 'mdbreact';
 import { MDBCard, MDBCardBody, MDBIcon, MDBCardText } from 'mdbreact';
 import Sidenav from '../Sidenav/Sidenav';
+import './Userprofile.css';
+
 
 
 class Userprofile extends Component {
@@ -17,32 +19,21 @@ class Userprofile extends Component {
                 <Sidenav />
                 <main id="content" className="p-5">
 
-
+                    <h3>Update Profile</h3>
+                    <h6>Complete your profile</h6>
+                    <form id="medic-reg">
                     <MDBRow className="mb-4">
-                        <MDBCol md="9" className="mb-r">
+                        <MDBCol md="8" className="mb-r">
                             <MDBCard className="cascading-admin-card">
-                                <form id="medic-reg">
+                                
 
                                     <div className="grey-text">
 
 
-                                        <table className="full-width" cellSpacing="0">
-                                            <tr>
-                                                <td>
-                                                    <MDBInput
-                                                        label="Your Full Names"
-                                                        // icon="user"
-                                                        group
-                                                        type="text"
-                                                        validate
-                                                        error="wrong"
-                                                        success="right"
-                                                        className="full-width"
-                                                    />
-                                                </td>
-                                                <td>
-                                                    <MDBInput
-                                                        label="National ID Number(NIN)"
+                                        <MDBRow>
+                                            <MDBCol>
+                                            <MDBInput
+                                                        label="Full Names"
                                                         icon="user"
                                                         group
                                                         type="text"
@@ -51,122 +42,126 @@ class Userprofile extends Component {
                                                         success="right"
                                                         className="full-width"
                                                     />
-                                                </td>
-                                            </tr>
+                                            </MDBCol>
+                                            
+                                        </MDBRow>
 
-                                            <tr>
-                                                <td>
-                                                    <MDBInput
-                                                        // label="Date of Birth "
-                                                        icon="user"
-                                                        group
-                                                        type="date"
-                                                        validate
-                                                        error="wrong"
-                                                        success="right"
-                                                    />
-
-                                                </td>
-                                                <td>
-                                                    <MDBInput
-                                                        label="Your Specialization"
-                                                        icon="envelope"
+                                        <MDBRow>
+                                            
+                                            <MDBCol>
+                                            <MDBInput
+                                                        label="Specialization"
+                                                        icon="user-md"
                                                         group
                                                         type="text"
                                                         validate
                                                         error="wrong"
                                                         success="right"
                                                     />
-                                                </td>
-                                            </tr>
+                                            </MDBCol>
+                                        </MDBRow>
 
-                                            <tr>
-                                                <td>
-                                                    <MDBInput
-                                                        label="Postal Address"
-                                                        icon="exclamation-triangle"
+                                        <MDBRow>
+                                            <MDBCol>
+                                                <MDBInput
+                                                label="Your Price Rate"
+                                                        icon="dollar-sign"
                                                         group
                                                         type="text"
                                                         validate
                                                         error="wrong"
                                                         success="right"
-                                                    />
-                                                </td>
-                                                <td>
-                                                    <MDBInput
-                                                        label="City / District "
-                                                        icon="user"
-                                                        group
-                                                        type="text"
-                                                        validate
-                                                        error="wrong"
-                                                        success="right"
-                                                    />
-                                                </td>
-                                            </tr>
+                                                />
+                                            </MDBCol>
+                                        </MDBRow>
 
-                                            <tr>
-                                                <td>
-                                                    <MDBInput
+                                        <MDBRow>
+                                            <MDBCol>
+                                            <MDBInput
                                                         label="Phone Number"
-                                                        icon="user"
+                                                        icon="phone"
                                                         group
                                                         type="text"
                                                         validate
                                                         error="wrong"
                                                         success="right"
                                                     />
-                                                </td>
-                                                <td>
-                                                    <MDBInput
-                                                        label="Your Price Rate"
-                                                        icon="user"
+                                            </MDBCol>
+                                            <MDBCol>
+                                            <MDBInput
+                                                        label="City / District "
+                                                        icon="location-arrow"
                                                         group
                                                         type="text"
                                                         validate
                                                         error="wrong"
                                                         success="right"
                                                     />
-                                                </td>
-                                            </tr>
+                                            </MDBCol>
+                                            
+                                        </MDBRow>
 
-                                            <tr>
-                                                <td>
-                                                    <MDBInput
-                                                        label="Your password"
-                                                        icon="lock"
+
+                                        <MDBRow>
+                                            <MDBCol>
+                                            <MDBInput
+                                                        label="Postal Address"
+                                                        icon="map-marker"
                                                         group
-                                                        type="password"
+                                                        type="text"
+                                                        validate
+                                                        error="wrong"
+                                                        success="right"
+                                                    />
+                                            </MDBCol>
+                                            
+                                        </MDBRow>
+
+                                        <MDBRow>
+                                        <MDBCol>
+                                            <MDBInput
+                                                        label="My Biography"
+                                                        icon="info-circle"
+                                                        group
+                                                        type="textarea"
                                                         validate
                                                     />
-                                                </td>
-                                                <td>
-                                                    <MDBInput
-                                                        label="Confirm password"
-                                                        icon="lock"
-                                                        group
-                                                        type="password"
-                                                        validate
-                                                    />
-                                                </td>
-                                            </tr>
-                                        </table>
-
+                                            </MDBCol>
+                                        </MDBRow>
 
 
                                     </div>
-                                    <div className="text-center">
-                                        <MDBBtn color="primary">Register</MDBBtn>
+                                    <div className="">
+                                        <MDBBtn color="primary">Update Profile</MDBBtn>
                                     </div>
-                                </form>
+                                
                             </MDBCard>
                         </MDBCol>
+
+                        <MDBCol md="4" className="mb-r">
+                            <MDBCard className="cascading-admin-card">
+                                
+                                <div className="photo pt-2">
+                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSki5bL19vA6cPTUaeqrmW1QJS0tIGnX-m6bDieIZpZMjB16r3lYw" alt=""/>
+                                </div>
+                                <div className="user-content">
+                                    <div className="user">
+                                        <h6>Founder</h6>
+                                        <h4>Dr. Kazim-Kazim Richards</h4>
+                                        <hr/>
+                                        <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam vel doloribus iure, voluptates odit </p>
+                                        <button className="btn btn-primary">Follow</button>
+                                    </div>
+                                </div>
+                            </MDBCard>
+                        </MDBCol>
+
                     </MDBRow>
+                    </form>
 
 
-                    <div className="">
-
-                    </div>
+                    
+                    
                 </main>
             </React.Fragment>
         );

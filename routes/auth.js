@@ -56,6 +56,7 @@ router.get('/verify', asyncMiddleware(async(req, res) => {
 }) )
 
 
+
 function validate(req) {
     const schema = {
         phone: Joi.string().min(10).max(13).required(),

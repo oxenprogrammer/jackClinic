@@ -84,18 +84,12 @@ router.get('/:id', authMiddleware, validateObjectId, asyncMiddleware(async (req,
 );
 
 router.post('/me', authMiddleware, asyncMiddleware( async (req, res) => {
-    // const doctor = await Doctor.findById(req.user._id).select('-password');
-    // res.send({user: doctor}); 
-    // res.send(doctor); 
-    // const { error } = validate(req.body); 
-    // if (error) return res.status(400).send(error.details[0].message);
-
+    
         const doctor = await Doctor.findByIdAndUpdate(req.user._id,
             { 
               postalAddress: req.body.postalAddress,
               city: req.body.city,
               phone: req.body.phone,
-            //   password: req.body.password,
               priceRate: req.body.priceRate,
               fullName: req.body.fullName,
               biography: req.body.biography,

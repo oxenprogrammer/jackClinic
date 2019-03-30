@@ -42,9 +42,42 @@ class Navigation extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLoggedin: false
+            isLoggedin: false,
+            isMedic: false,
+            profileLink: ''
         }
         this.logout = this.logout.bind(this);
+    }
+
+
+    getMyDetails() {
+        const thisApp = this;
+
+        var req = unirest("GET", addr + "/api/doctors/me");
+
+        req.headers({
+            "cache-control": "no-cache",
+            "x-auth-token": token
+        });
+
+        req.end(function (res) {
+            if (res.error) {
+                console.log(res.error);
+            }
+            else {
+                let obj = res.body
+                if(typeof obj != "undefined" && obj.hasOwnProperty('priceRate')){
+                    console.log("i am a doctor");
+                    thisApp.setState({isMedic: true, profileLink: '/profile' })
+                }    
+                 else{
+                    console.log("i am a patient");
+                    thisApp.setState({isMedic: false, profileLink: '/myclientprofile' })
+                }
+            }
+
+        });
+
     }
 
 
@@ -65,7 +98,12 @@ class Navigation extends Component {
                 thisApp.setState({
                     isLoggedin: false
                 }, () => console.log(thisApp.state))
-            } else {
+            } 
+            // else if(){
+
+            // } 
+            
+            else {
                 thisApp.setState({
                     isLoggedin: true
                 }, () => console.log(thisApp.state))
@@ -84,15 +122,7 @@ class Navigation extends Component {
 
     componentDidMount() {
         this.verifyLogin();
-        // const logout = document.getElementById('logout')
-        // if (logout) {
-        //     logout.addEventListener('click', function (e) {
-        //         e.preventDefault();
-        //         localStorage.clear()
-        //         sessionStorage.clear()
-        //         window.location.href="/";
-        //     })
-        // }
+        this.getMyDetails()
         
     }
 
@@ -102,21 +132,16 @@ class Navigation extends Component {
     render() {
 
         const isLoggedin = this.state.isLoggedin;
+        const profileLink = this.state.profileLink;
         const username = window.sessionStorage.getItem('username')
         let account;
-
-        // if (isLoggedin) {
-        //     account = <React.Fragment><li><a href="#">Hi {username} <i class="fa fa-user-circle-o" aria-hidden="true"></i> </a></li></React.Fragment>
-        // } else {
-        //     account = <React.Fragment><li><a href="/signup">Sign up</a></li> <li><a href="/login">Sign in</a></li></React.Fragment>
-        // }
 
 
         if (isLoggedin) {
             // account = <React.Fragment><Nav.Link href="#">Hi {username} <i class="fa fa-user-circle-o" aria-hidden="true"></i></Nav.Link></React.Fragment>
             // account = <React.Fragment><Nav.Link href="#">Hi {username} <i class="fa fa-user-circle-o" aria-hidden="true"></i></Nav.Link></React.Fragment>
             account = <React.Fragment><NavDropdown title={username} id="collasible-nav-dropdown">
-                <NavDropdown.Item href="/profile"><i class="fa fa-user-circle-o" aria-hidden="true"></i>  My Profile</NavDropdown.Item>
+                <NavDropdown.Item href= {profileLink} ><i class="fa fa-user-circle-o" aria-hidden="true"></i>  My Profile</NavDropdown.Item>
                 <NavDropdown.Item id="logout" onClick={this.logout} ><i class="fa fa-sign-out" aria-hidden="true"></i>  Logout</NavDropdown.Item>
 
             </NavDropdown></React.Fragment>

@@ -9,6 +9,7 @@ import './App.css';
 import Contact from './components/Contact/Contact';
 import MedicDashboard from './components/Dashboards/MedicDashboard/MedicDashboard';
 import Userprofile from './components/Dashboards/Userprofile/Userprofile';
+import ClientProfile from './components/Dashboards/Userprofile/ClientProfile';
 import ClientDashboard from './components/Dashboards/ClientDashboard/ClientDashboard';
 
 
@@ -30,6 +31,7 @@ class App extends Component {
                   <Route exact path="/medic" component={ MedicDashboard } />
                   <Route exact path="/client" component={ ClientDashboard } />
                   <Route exact path="/profile" component={ Userprofile } />
+                  <Route exact path="/myclientprofile" component={ ClientProfile } />
                   {/* <Route exact path="/contact" component={ Contact } /> */}
 
                   

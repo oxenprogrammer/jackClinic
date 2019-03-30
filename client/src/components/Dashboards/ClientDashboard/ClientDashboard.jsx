@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Topnav from '../Topnav/Topnav';
-import SidenavClient from '../Sidenav/Sidenav';
+import SidenavClient from '../Sidenav/SidenavClient';
 import { MDBCard, MDBCardBody, MDBIcon, MDBRow, MDBCol, MDBCardText } from 'mdbreact';
 import { MDBListGroup, MDBListGroupItem, MDBContainer, MDBMedia } from "mdbreact";
 

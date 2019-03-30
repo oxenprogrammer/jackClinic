@@ -11,7 +11,7 @@ const router = express.Router();
 
 router.get('/me', authMiddleware, asyncMiddleware(async (req, res) => {
     const patient = await Patient.findById(req.user._id).select('-password'); 
-    res.send({'user': patient}); 
+    res.send(patient); 
     })
 );
 
@@ -85,6 +85,23 @@ router.get('/:id', [authMiddleware, isActive], asyncMiddleware(async (req, res) 
     res.send(patient);
     })
 );
+
+router.post('/me', authMiddleware, asyncMiddleware( async (req, res) => {
+    
+    const patient = await Patient.findByIdAndUpdate(req.user._id,
+        { 
+          location: req.body.location,
+          city: req.body.city,
+          phone: req.body.phone,
+          fullName: req.body.fullName,
+        }, { new: true }
+    ).select('-password');
+    
+    if (!patient) return res.status(404).send('The patient with the given ID was not found.');
+    res.send(patient);
+})
+);
+
 
 module.exports = router;
 
