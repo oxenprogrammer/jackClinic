@@ -44,7 +44,8 @@ class Navigation extends Component {
         this.state = {
             isLoggedin: false,
             isMedic: false,
-            profileLink: ''
+            profileLink: '',
+            dashboardLink: ''
         }
         this.logout = this.logout.bind(this);
     }
@@ -68,11 +69,19 @@ class Navigation extends Component {
                 let obj = res.body
                 if(typeof obj != "undefined" && obj.hasOwnProperty('priceRate')){
                     console.log("i am a doctor");
-                    thisApp.setState({isMedic: true, profileLink: '/profile' })
+                    thisApp.setState({
+                        isMedic: true, 
+                        profileLink: '/profile',
+                        dashboardLink: '/medic'
+                     })
                 }    
                  else{
                     console.log("i am a patient");
-                    thisApp.setState({isMedic: false, profileLink: '/myclientprofile' })
+                    thisApp.setState({
+                        isMedic: false,
+                        profileLink: '/myclientprofile',
+                        dashboardLink: '/client'
+                     })
                 }
             }
 
@@ -99,9 +108,6 @@ class Navigation extends Component {
                     isLoggedin: false
                 }, () => console.log(thisApp.state))
             } 
-            // else if(){
-
-            // } 
             
             else {
                 thisApp.setState({
@@ -133,8 +139,10 @@ class Navigation extends Component {
 
         const isLoggedin = this.state.isLoggedin;
         const profileLink = this.state.profileLink;
+        const dashboardLink = this.state.dashboardLink;
         const username = window.sessionStorage.getItem('username')
         let account;
+        let dashboard;
 
 
         if (isLoggedin) {
@@ -145,8 +153,11 @@ class Navigation extends Component {
                 <NavDropdown.Item id="logout" onClick={this.logout} ><i class="fa fa-sign-out" aria-hidden="true"></i>  Logout</NavDropdown.Item>
 
             </NavDropdown></React.Fragment>
+            dashboard = <React.Fragment> <Nav.Link href= {dashboardLink} >Dashboard</Nav.Link> </React.Fragment>
+
         } else {
             account = <React.Fragment><Nav.Link href="/signup">Sign up</Nav.Link> <Nav.Link href="/login">Sign in</Nav.Link></React.Fragment>
+            dashboard = ''
         }
 
         return (
@@ -167,6 +178,7 @@ class Navigation extends Component {
                                 {/* <Nav.Link href="/signup">Sign Up</Nav.Link>
                                 <Nav.Link href="/login">Log In</Nav.Link> */}
                                 {/* <Nav.Link>{account}</Nav.Link> */}
+                                {dashboard}
                                 {account}
                                 {/* <NavDropdown title={account} id="collasible-nav-dropdown">
                                 <NavDropdown.Item href="">My Profile</NavDropdown.Item>
