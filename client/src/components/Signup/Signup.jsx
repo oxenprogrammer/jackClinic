@@ -72,6 +72,19 @@ const validationSchema1 = Yup.object({
 });
 
 
+const capitalize = (s) =>{
+    if (typeof s !== 'string') return '' 
+    // return s.charAt(0).toUpperCase() + s.slice(1)
+    return s.replace(
+        /\w\S*/g,
+        function(txt) {
+            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+        }
+    );
+    
+}
+
+
 class Signup extends Component {
     constructor(props) {
         super(props);
@@ -147,6 +160,7 @@ class Signup extends Component {
         req.type("json");
         
         req.send(data);
+        // req.send((capitalize(data)))
 
         req.end(function (res) {
             const Toast = Swal.mixin({
@@ -292,7 +306,7 @@ class Form1 extends Component {
                                                             helperText={touched.fullName ? errors.fullName : ""}
                                                             error={touched.fullName && Boolean(errors.fullName)}
                                                             label="Full Names"
-                                                            value={fullName}
+                                                            value={capitalize(fullName)}
                                                             onChange={change.bind(null, "fullName")}
                                                             onBlur={handleBlur}
                                                             fullWidth
@@ -320,7 +334,7 @@ class Form1 extends Component {
                                                             label="Your Specialization"
                                                             onChange={change.bind(null, "specialization")}
                                                             onBlur={handleBlur}
-                                                            value={specialization}
+                                                            value={capitalize(specialization)}
                                                             fullWidth />
                                                     </Grid>
                                                 </Grid>
@@ -368,7 +382,7 @@ class Form1 extends Component {
                                                             label="Postal Address "
                                                             onChange={change.bind(null, "postalAddress")}
                                                             onBlur={handleBlur}
-                                                            value={postalAddress}
+                                                            value={capitalize(postalAddress)}
                                                             fullWidth />
                                                     </Grid>
                                                 </Grid>
@@ -395,7 +409,7 @@ class Form1 extends Component {
                                                             label="Town / City / District"
                                                             onChange={change.bind(null, "postalAddress")}
                                                             onBlur={handleBlur}
-                                                            value={city}
+                                                            value={capitalize(city)}
                                                             fullWidth />
                                                     </Grid>
                                                 </Grid>
@@ -560,7 +574,7 @@ class Form2 extends Component {
                                                             helperText={touched.fullName ? errors.fullName : ""}
                                                             error={touched.fullName && Boolean(errors.fullName)}
                                                             label="Full Names"
-                                                            value={fullName}
+                                                            value={capitalize(fullName)}
                                                             onChange={change.bind(null, "fullName")}
                                                             onBlur={handleBlur}
                                                             fullWidth
@@ -617,7 +631,7 @@ class Form2 extends Component {
                                                             label="Location "
                                                             onChange={change.bind(null, "location")}
                                                             onBlur={handleBlur}
-                                                            value={location}
+                                                            value={capitalize(location)}
                                                             fullWidth />
                                                     </Grid>
                                                 </Grid>
@@ -644,7 +658,7 @@ class Form2 extends Component {
                                                             label="Town / City / District"
                                                             onChange={change.bind(null, "postalAddress")}
                                                             onBlur={handleBlur}
-                                                            value={city}
+                                                            value={capitalize(city)}
                                                             fullWidth />
                                                     </Grid>
                                                 </Grid>

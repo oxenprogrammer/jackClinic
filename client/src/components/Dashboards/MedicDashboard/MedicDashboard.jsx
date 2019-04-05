@@ -50,17 +50,17 @@ class MedicDashboard extends Component {
         this.setState({ [name]: e.target.checked })
     }
 
-    onToggle(e){
+    onToggle(e) {
         const thisApp = this;
         e.preventDefault();
         thisApp.toggleAvailability(thisApp.state)
     }
 
 
-    toggleAvailability(data) { 
+    toggleAvailability(data) {
         var req = unirest("POST", addr + "/api/doctors/my-availability");
         req.headers({
-            
+
             "cache-control": "no-cache",
             "Content-Type": "application/json",
             "x-auth-token": token
@@ -70,9 +70,9 @@ class MedicDashboard extends Component {
         req.send(data);
 
         req.end(function (res) {
-            if (res.error){
-                console.log(res.error);  
-            } 
+            if (res.error) {
+                console.log(res.error);
+            }
 
             console.log(res.body);
 
@@ -80,7 +80,7 @@ class MedicDashboard extends Component {
 
     }
 
-    getAvailabity(){
+    getAvailabity() {
         const thisApp = this;
         var req = unirest("GET", addr + "/api/doctors/me");
 
@@ -95,12 +95,12 @@ class MedicDashboard extends Component {
             else {
                 console.log(res.body);
                 // thisApp.setState(res.body)
-                thisApp.setState({isAvailable: res.body.isAvailable})
+                thisApp.setState({ isAvailable: res.body.isAvailable })
             }
         });
     }
 
-    componentDidMount(){
+    componentDidMount() {
         const thisApp = this;
         thisApp.getAvailabity();
     }
@@ -226,27 +226,30 @@ class MedicDashboard extends Component {
                                 <h3>Toggle Availability</h3>
                                 <div class="custom-control custom-switch">
                                     <form onSubmit={this.onToggle} >
-                                    <FormGroup>
-                                        <FormControlLabel
-                                            control={
-                                                <Switch
-                                                    checked={this.state.isAvailable}
-                                                    onChange={this.handleChange('isAvailable')}
-                                                    value="isAvailable"
-                                                    
-                                                />
-                                            }
-                                            label="Available"
-                                        />
+                                        <FormGroup>
+                                            <FormControlLabel
+                                                control={
+                                                    <Switch
+                                                        checked={this.state.isAvailable}
+                                                        onChange={this.handleChange('isAvailable')}
+                                                        value="isAvailable"
+
+                                                    />
+                                                }
+                                                label="Available"
+                                            />
+
+                                        </FormGroup>
+                                        <button className="btn btn-primary" type="submit">Update Availability</button>
                                         
-                                    </FormGroup>
-                                    <button className="btn btn-primary" type="submit">Update Availability</button>
-                                    
+
+                                        
+
                                     </form>
 
                                 </div>
 
-                                
+
                             </MDBCard>
 
                         </MDBCol>
@@ -258,10 +261,6 @@ class MedicDashboard extends Component {
         );
     }
 }
-
-
-
-
 
 
 

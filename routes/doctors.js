@@ -19,10 +19,19 @@ router.get('/me', authMiddleware, asyncMiddleware( async (req, res) => {
 );
 
 router.get('/', authMiddleware, asyncMiddleware( async (req, res) => {
-    const doctors = await Doctor.find().sort('firstName'); 
+    const doctors = await Doctor.find().sort('fullName'); 
     res.send(doctors);
     }) 
 );
+
+router.get('/available', authMiddleware, asyncMiddleware( async (req, res) => {
+    
+        const doctors = await Doctor.find({isAvailable: true}).sort('fullName'); 
+        res.send(doctors);
+    
+    }) 
+);
+
 
 router.post('/', asyncMiddleware( async (req, res) => {
     const { error } = validate(req.body); 
@@ -107,7 +116,9 @@ router.post('/my-availability', authMiddleware, asyncMiddleware(async (req, res)
 
     if (!doctor) return res.status(404).send('The doctor with the given ID was not found.');
         res.send(doctor);
-}))
+}));
+
+
 
 module.exports = router;
 

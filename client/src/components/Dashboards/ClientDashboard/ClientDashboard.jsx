@@ -5,46 +5,116 @@ import { MDBCard, MDBCardBody, MDBIcon, MDBRow, MDBCol, MDBCardText } from 'mdbr
 import { MDBListGroup, MDBListGroupItem, MDBContainer, MDBMedia } from "mdbreact";
 
 import './ClientDashboard.css';
-var Rating = require('react-rating');
 
+var unirest = require("unirest");
+
+// var Rating = require('react-rating');
+
+var server = require('../../../config.json');
+
+let addr = server.live_server;
+
+if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+    // dev code
+    addr = server.local_server;
+} else {
+    // production code
+    addr = server.live_server;
+
+}
+
+const token = window.sessionStorage.getItem('usertoken')
 
 
 class ClientDashboard extends Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            availableDoctors: []
         }
+        this.getDoctors = this.getDoctors.bind(this);
+    }
+
+    getDoctors() {
+        const thisApp = this;
+        var req = unirest("GET", addr + "/api/doctors/available");
+
+        req.headers({
+
+            "cache-control": "no-cache",
+            "x-auth-token": token
+        });
+
+
+        req.end(function (res) {
+            if (res.error){
+                console.log(res.error);  
+            } 
+            if(res.status == 200){
+                thisApp.setState({
+                    availableDoctors: res.body
+                }, ()=> console.log(thisApp.state) )
+            }
+
+            // console.log(res.body);
+        });
+
+    }
+
+    componentDidMount(){
+        this.getDoctors();
     }
 
 
-    
 
 
-    
+
+
 
 
     render() {
+
+        let available = this.state.availableDoctors;
+        let listAvailable = available && available.length > 0 ? 
+        (
+            available.map((listing) => {
+                return(
+                    <React.Fragment >
+                        <MDBMedia list className="mt-3">
+                                    <MDBMedia tag="li" className="available-medic">
+                                        <MDBMedia left href="#">
+                                            <MDBMedia object src="https://mdbootstrap.com/img/Photos/Others/placeholder7.jpg" alt="Generic placeholder image" />
+                                        </MDBMedia>
+                                        <MDBMedia body>
+                                            <MDBMedia >
+                                                <h5> {listing.fullName} </h5>
+                                                
+                                            </MDBMedia>
+                                            <h6>{listing.specialization}</h6>
+                                            {listing.biography}
+                                        </MDBMedia>
+                                    </MDBMedia>
+                        </MDBMedia>
+                    </React.Fragment>
+                )
+            })
+        ) : ("")
 
 
 
         return (
             <React.Fragment>
-                {/* <Topnav/> */}
-                {/* <Sidenav /> */}
-                {/* <div className="container"> */}
-                {/* <div className="row"> */}
-                {/* <div className="col-md-12"> */}
+
                 <SidenavClient />
 
                 <main id="content" className="p-5">
 
                     <MDBRow>
                         <MDBCol xl="7" md="6">
-                            {/* <MDBCard className="cascading-admin-card"> */}
+                            
                             <h3>Recent Activities</h3>
 
-                            {/* <MDBContainer> */}
+                            
                             <MDBListGroup >
                                 <MDBListGroupItem hover href="#">
                                     <div className="d-flex w-100 justify-content-between">
@@ -78,79 +148,24 @@ class ClientDashboard extends Component {
                                     <small className="text-muted">
                                         Rate your medic
                                     </small>
-                                    {/* <Rating /> */}
+                                   
 
                                 </MDBListGroupItem>
                             </MDBListGroup>
-                            {/* </MDBContainer> */}
-                            {/* </MDBCard> */}
-
+                            
                         </MDBCol>
 
                         <MDBCol xl="5" md="6">
                             <h3>Medics Available for you</h3>
                             <MDBCard className="cascading-admin-card">
 
-                                <MDBMedia list className="mt-3">
-                                    <MDBMedia tag="li" className="available-medic">
-                                        <MDBMedia left href="#">
-                                            <MDBMedia object src="https://mdbootstrap.com/img/Photos/Others/placeholder7.jpg" alt="Generic placeholder image" />
-                                        </MDBMedia>
-                                        <MDBMedia body>
-                                            <MDBMedia >
-                                                <h5>Dr. Menton Krono</h5>
-                                            </MDBMedia>
-                                            Cras sit amet nibh libero, in gravida nullailla. Donec lacinia congue felis in faucibus.
-                                        </MDBMedia>
-                                    </MDBMedia>
-                                    <MDBMedia tag="li" className="available-medic">
-                                        <MDBMedia left href="#">
-                                            <MDBMedia object src="https://mdbootstrap.com/img/Photos/Others/placeholder6.jpg" alt="Generic placeholder image" />
-                                        </MDBMedia>
-                                        <MDBMedia body>
-                                            <MDBMedia >
-                                                <h5>Dr. Shaba Ranks</h5>
-                                            </MDBMedia>
-                                            Cras sit amet nibh libero, in gravida nullailla. Donec lacinia congue felis in faucibus.
-                                        </MDBMedia>
-                                    </MDBMedia>
-                                    <MDBMedia tag="li" className="available-medic">
-                                        <MDBMedia left href="#">
-                                            <MDBMedia object src="https://mdbootstrap.com/img/Photos/Others/placeholder5.jpg" alt="Generic placeholder image" />
-                                        </MDBMedia>
-                                        <MDBMedia body>
-                                            <MDBMedia>
-                                                <h5>Dr. Chaka Demus</h5>
-                                            </MDBMedia>
-                                            Cras sit amet nibh libero, in gravida nullailla. Donec lacinia congue felis in faucibus.
-                                         </MDBMedia>
-                                    </MDBMedia>
-                                    <MDBMedia tag="li" className="available-medic">
-                                        <MDBMedia left href="#">
-                                            <MDBMedia object src="https://mdbootstrap.com/img/Photos/Others/placeholder5.jpg" alt="Generic placeholder image" />
-                                        </MDBMedia>
-                                        <MDBMedia body>
-                                            <MDBMedia>
-                                                <h5>Dr. Buju Banton</h5>
-                                            </MDBMedia>
-                                            Cras sit amet nibh libero, in gravida nullailla. Donec lacinia congue felis in faucibus.
-                                         </MDBMedia>
-                                    </MDBMedia>
-                                </MDBMedia>
-
-
-
+                                {listAvailable}
 
                             </MDBCard>
 
                         </MDBCol>
                     </MDBRow>
                 </main>
-
-
-                {/* </div> */}
-                {/* </div> */}
-                {/* </div> */}
 
             </React.Fragment>
         );
