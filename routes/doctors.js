@@ -102,6 +102,12 @@ router.post('/me', authMiddleware, asyncMiddleware( async (req, res) => {
     })
 );
 
+router.post('/my-availability', authMiddleware, asyncMiddleware(async (req, res) => {
+    const doctor = await Doctor.findByIdAndUpdate(req.user._id, {isAvailable: req.body.isAvailable}).select('-password');
+
+    if (!doctor) return res.status(404).send('The doctor with the given ID was not found.');
+        res.send(doctor);
+}))
 
 module.exports = router;
 

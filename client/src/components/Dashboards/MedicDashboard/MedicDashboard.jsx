@@ -10,6 +10,26 @@ import Switch from '@material-ui/core/Switch';
 
 
 
+var unirest = require("unirest");
+
+
+var server = require('../../../config.json');
+
+let addr = server.live_server;
+
+if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+    // dev code
+    addr = server.local_server;
+} else {
+    // production code
+    addr = server.live_server;
+
+}
+
+const token = window.sessionStorage.getItem('usertoken')
+
+
+
 
 
 class MedicDashboard extends Component {
@@ -18,6 +38,10 @@ class MedicDashboard extends Component {
         this.state = {
             isAvailable: false
         }
+        this.handleChange = this.handleChange.bind(this);
+        this.onToggle = this.onToggle.bind(this);
+        this.toggleAvailability = this.toggleAvailability.bind(this);
+        this.getAvailabity = this.getAvailabity.bind(this);
     }
 
 
@@ -26,15 +50,66 @@ class MedicDashboard extends Component {
         this.setState({ [name]: e.target.checked })
     }
 
+    onToggle(e){
+        const thisApp = this;
+        e.preventDefault();
+        thisApp.toggleAvailability(thisApp.state)
+    }
+
+
+    toggleAvailability(data) { 
+        var req = unirest("POST", addr + "/api/doctors/my-availability");
+        req.headers({
+            
+            "cache-control": "no-cache",
+            "Content-Type": "application/json",
+            "x-auth-token": token
+        });
+
+        req.type("json");
+        req.send(data);
+
+        req.end(function (res) {
+            if (res.error){
+                console.log(res.error);  
+            } 
+
+            console.log(res.body);
+
+        });
+
+    }
+
+    getAvailabity(){
+        const thisApp = this;
+        var req = unirest("GET", addr + "/api/doctors/me");
+
+        req.headers({
+            "cache-control": "no-cache",
+            "x-auth-token": token
+        });
+        req.end(function (res) {
+            if (res.error) {
+                console.log(res.error);
+            }
+            else {
+                console.log(res.body);
+                // thisApp.setState(res.body)
+                thisApp.setState({isAvailable: res.body.isAvailable})
+            }
+        });
+    }
+
+    componentDidMount(){
+        const thisApp = this;
+        thisApp.getAvailabity();
+    }
+
 
     render() {
         return (
             <React.Fragment>
-                {/* <Topnav/> */}
-                {/* <Sidenav /> */}
-                {/* <div className="container"> */}
-                {/* <div className="row"> */}
-                {/* <div className="col-md-12"> */}
+
                 <Sidenav />
 
                 <main id="content" className="p-5">
@@ -103,26 +178,7 @@ class MedicDashboard extends Component {
                                 </MDBCardBody>
                             </MDBCard>
                         </MDBCol>
-                        {/* <MDBCol xl="3" md="6" className="mb-r">
-                                    <MDBCard className="cascading-admin-card">
-                                        <div className="admin-up">
-                                            <MDBIcon icon="chart-bar" className="red accent-2" />
-                                            <div className="data">
-                                                <p>ORGANIC TRAFFIC</p>
-                                                <h4>
-                                                    <strong>2000</strong>
-                                                </h4>
-                                            </div>
-                                        </div>
-                                        <MDBCardBody>
-                                            <div className="progress">
-                                                <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="25" className="progress-bar bg-primary" role="progressbar"
-                                                    style={{ width: '25%' }}></div>
-                                            </div>
-                                            <MDBCardText>Better than last week (25%)</MDBCardText>
-                                        </MDBCardBody>
-                                    </MDBCard>
-                                </MDBCol> */}
+
                     </MDBRow>
 
                     <MDBRow>
@@ -169,6 +225,7 @@ class MedicDashboard extends Component {
                             <MDBCard className="cascading-admin-card">
                                 <h3>Toggle Availability</h3>
                                 <div class="custom-control custom-switch">
+                                    <form onSubmit={this.onToggle} >
                                     <FormGroup>
                                         <FormControlLabel
                                             control={
@@ -176,18 +233,20 @@ class MedicDashboard extends Component {
                                                     checked={this.state.isAvailable}
                                                     onChange={this.handleChange('isAvailable')}
                                                     value="isAvailable"
+                                                    
                                                 />
                                             }
                                             label="Available"
                                         />
+                                        
                                     </FormGroup>
+                                    <button className="btn btn-primary" type="submit">Update Availability</button>
+                                    
+                                    </form>
 
-                                    {/* <input type="checkbox" class="custom-control-input" id="customSwitch1" />
-                                    <label class="custom-control-label" for="customSwitch1">Toggle Availability</label> */}
                                 </div>
 
-
-
+                                
                             </MDBCard>
 
                         </MDBCol>
@@ -195,13 +254,16 @@ class MedicDashboard extends Component {
                 </main>
 
 
-                {/* </div> */}
-                {/* </div> */}
-                {/* </div> */}
-
             </React.Fragment>
         );
     }
 }
+
+
+
+
+
+
+
 
 export default MedicDashboard;
