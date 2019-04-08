@@ -1,5 +1,6 @@
 /*jshint esversion: 6 */
 const express = require('express');
+const router = express.Router();
 const specializations = require('../routes/specializations');
 const patients = require('../routes/patients');
 const doctors = require('../routes/doctors');
@@ -9,10 +10,14 @@ const auth = require('../routes/auth');
 const login = require('../routes/login');
 const cors = require('cors');
 const error = require('../middleware/error');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('../swagger.json');
 
 module.exports = function(app) {
     app.use(express.json());
     app.use(cors());
+    app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+    app.use('/api', router);
     app.use('/api/specializations', specializations);
     app.use('/api/doctors', doctors);
     app.use('/api/patients', patients);

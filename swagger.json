@@ -1,0 +1,165 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "YourMusawo",
+    "description": "Get Medical Treatment at the Comfort of your Home",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "host": "localhost:4000",
+  "basePath": "/api",
+  "tags": [
+    {
+      "name": "YourMusawo",
+      "description": "API for clients in the system"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/patients": {
+      "post": {
+        "tags": [
+          "Patients"
+        ],
+        "description": "Create new client/patient in system, required fields: name, phone, location, password, date of birth",
+        "parameters": [
+          {
+            "name": "patients",
+            "in": "body",
+            "description": "Clients that we want to create an account",
+            "schema": {
+              "$ref": "#/definitions/patients"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Client/patient successfully created",
+            "schema": {
+              "$ref": "#/definitions/patients"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Patients"
+        ],
+        "summary": "Get all clients in system",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/patients"
+            }
+          }
+        }
+      }
+    },
+    "/patients/{userId}": {
+      "get": {
+        "tags": [
+          "Patients"
+        ],
+        "summary": "Get client with given ID",
+        "responses": {
+          "200": {
+            "description": "User is found",
+            "schema": {
+              "$ref": "#/definitions/patients"
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete client with given ID",
+        "tags": [
+          "Patients"
+        ],
+        "responses": {
+          "200": {
+            "description": "Client is deleted",
+            "schema": {
+              "$ref": "#/definitions/patients"
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update user with give ID",
+        "tags": [
+          "Patients"
+        ],
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "description": "Client with new values of properties: name. location, password",
+            "schema": {
+              "$ref": "#/definitions/patients"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "client is updated",
+            "schema": {
+              "$ref": "#/definitions/patients"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "patients": {
+      "required": [
+        "name",
+        "phone",
+        "location",
+        "password",
+        "dob"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "uniqueItems": false
+        },
+        "phone": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "location": {
+          "type": "string",
+          "uniqueItems": false
+        },
+        "password": {
+          "type": "string",
+          "uniqueItems": false
+        },
+        "dob": {
+          "type": "Date",
+          "uniqueItems": false
+        }
+      }
+    },
+    "patients": {
+      "type": "array",
+      "$ref": "#/definitions/patients"
+    }
+  }
+}
