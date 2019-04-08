@@ -39,7 +39,7 @@
             "in": "body",
             "description": "Clients that we want to create an account",
             "schema": {
-              "$ref": "#/definitions/patients"
+              "$ref": "#/definitions/patient"
             }
           }
         ],
@@ -50,7 +50,7 @@
           "200": {
             "description": "Client/patient successfully created",
             "schema": {
-              "$ref": "#/definitions/patients"
+              "$ref": "#/definitions/patient"
             }
           }
         }
@@ -64,7 +64,7 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/patients"
+              "$ref": "#/definitions/patient"
             }
           }
         }
@@ -80,7 +80,7 @@
           "200": {
             "description": "User is found",
             "schema": {
-              "$ref": "#/definitions/patients"
+              "$ref": "#/definitions/patient"
             }
           }
         }
@@ -94,7 +94,7 @@
           "200": {
             "description": "Client is deleted",
             "schema": {
-              "$ref": "#/definitions/patients"
+              "$ref": "#/definitions/patient"
             }
           }
         }
@@ -110,7 +110,7 @@
             "in": "body",
             "description": "Client with new values of properties: name. location, password",
             "schema": {
-              "$ref": "#/definitions/patients"
+              "$ref": "#/definitions/patient"
             }
           }
         ],
@@ -118,7 +118,7 @@
           "200": {
             "description": "client is updated",
             "schema": {
-              "$ref": "#/definitions/patients"
+              "$ref": "#/definitions/patient"
             }
           }
         }
@@ -126,7 +126,7 @@
     }
   },
   "definitions": {
-    "patients": {
+    "patient": {
       "required": [
         "name",
         "phone",
@@ -156,10 +156,6 @@
           "uniqueItems": false
         }
       }
-    },
-    "patients": {
-      "type": "array",
-      "$ref": "#/definitions/patients"
     }
   }
 }
