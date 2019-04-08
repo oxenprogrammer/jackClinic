@@ -14,7 +14,7 @@
   "tags": [
     {
       "name": "YourMusawo",
-      "description": "API for clients in the system"
+      "description": "API for clients to find medical personnel who can offer home treatment in the system"
     }
   ],
   "schemes": [
@@ -47,7 +47,7 @@
           "application/json"
         ],
         "responses": {
-          "200": {
+          "201": {
             "description": "Client/patient successfully created",
             "schema": {
               "$ref": "#/definitions/patient"
@@ -123,6 +123,103 @@
           }
         }
       }
+    },
+    "/doctors": {
+      "post": {
+        "tags": [
+          "Doctors"
+        ],
+        "description": "Create new medical personnel in system, required fields: imageURL, imageId, firstName, lastName, nin, specialization, postAddress, dob, city, phone, password, priceRate",
+        "parameters": [
+          {
+            "name": "doctors",
+            "in": "body",
+            "description": "Medical personnel that  want to create an account",
+            "schema": {
+              "$ref": "#/definitions/doctor"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "201": {
+            "description": "Medical Personnel successfully created",
+            "schema": {
+              "$ref": "#/definitions/doctor"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Doctors"
+        ],
+        "summary": "Get all medical personnel in system",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/doctor"
+            }
+          }
+        }
+      }
+    },
+    "/doctors/{userId}": {
+      "get": {
+        "tags": [
+          "Doctors"
+        ],
+        "summary": "Get medical personnel with given ID",
+        "responses": {
+          "200": {
+            "description": "User is found",
+            "schema": {
+              "$ref": "#/definitions/doctor"
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete medical personnel with given ID",
+        "tags": [
+          "Doctors"
+        ],
+        "responses": {
+          "200": {
+            "description": "Medical Personnel is deleted",
+            "schema": {
+              "$ref": "#/definitions/doctor"
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update medical personnel with give ID",
+        "tags": [
+          "Doctors"
+        ],
+        "parameters": [
+          {
+            "name": "doctor",
+            "in": "body",
+            "description": "Medical personnel with new values of properties: city. postAddress, password, priceRate, isAvailable, isActive",
+            "schema": {
+              "$ref": "#/definitions/doctor"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "medical personnel is updated",
+            "schema": {
+              "$ref": "#/definitions/doctor"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -154,6 +251,95 @@
         "dob": {
           "type": "Date",
           "uniqueItems": false
+        },
+        "registeredOn": {
+          "type": "boolean"
+        }
+      }
+    },
+    "doctor": {
+      "required": [
+        "imageURL",
+        "imageId",
+        "firstName",
+        "lastName",
+        "nin",
+        "specialization",
+        "postAddress",
+        "dob",
+        "city",
+        "phone",
+        "password",
+        "priceRate"
+      ],
+      "properties": {
+        "imageURL": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "imageId": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "firstName": {
+          "type": "string",
+          "uniqueItems": false
+        },
+        "lastName": {
+          "type": "string",
+          "uniqueItems": false
+        },
+        "nin": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "specialization": {
+          "type": "string",
+          "uniqueItems": false
+        },
+        "postAddress": {
+          "type": "string",
+          "uniqueItems": false
+        },
+        "city": {
+          "type": "string",
+          "uniqueItems": false
+        },
+        "priceRate": {
+          "type": "string",
+          "uniqueItems": false
+        },
+        "phone": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "location": {
+          "type": "string",
+          "uniqueItems": false
+        },
+        "password": {
+          "type": "string",
+          "uniqueItems": false
+        },
+        "dob": {
+          "type": "Date",
+          "uniqueItems": false
+        },
+        "isAvailable": {
+          "type": "boolean"
+        },
+        "isActive": {
+          "type": "boolean"
+        },
+        "registeredOn": {
+          "type": "date",
+          "default": "true"
+        },
+        "isAdmin": {
+          "type": "boolean"
+        },
+        "everHired": {
+          "type": "boolean"
         }
       }
     }
