@@ -1,0 +1,648 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "YourMusawo",
+    "description": "Get Medical Treatment at the Comfort of your Home",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "host": "localhost:4000",
+  "basePath": "/api",
+  "tags": [
+    {
+      "name": "YourMusawo",
+      "description": "API for clients to find medical personnel who can offer home treatment in the system"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/patients": {
+      "post": {
+        "tags": [
+          "Client Account"
+        ],
+        "description": "Create new client/patient in system, required fields: name, phone, location, password, date of birth",
+        "parameters": [
+          {
+            "name": "patients",
+            "in": "body",
+            "description": "Clients that we want to create an account",
+            "schema": {
+              "$ref": "#/definitions/patient"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "201": {
+            "description": "Client/patient successfully created",
+            "schema": {
+              "$ref": "#/definitions/patient"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Client Account"
+        ],
+        "summary": "Get all clients in system",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/patient"
+            }
+          }
+        }
+      }
+    },
+    "/patients/me": {
+      "get": {
+        "tags": [
+          "Client Account"
+        ],
+        "summary": "Get currently logged in client in system",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/patient"
+            }
+          }
+        }
+      }
+    },
+    "/patients/{userId}": {
+      "get": {
+        "tags": [
+          "Client Account"
+        ],
+        "summary": "Get client with given ID",
+        "responses": {
+          "200": {
+            "description": "User is found",
+            "schema": {
+              "$ref": "#/definitions/patient"
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete client with given ID",
+        "tags": [
+          "Client Account"
+        ],
+        "responses": {
+          "200": {
+            "description": "Client is deleted",
+            "schema": {
+              "$ref": "#/definitions/patient"
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update user with give ID",
+        "tags": [
+          "Client Account"
+        ],
+        "parameters": [
+          {
+            "name": "patients",
+            "in": "body",
+            "description": "Client with new values of properties: name. location, password",
+            "schema": {
+              "$ref": "#/definitions/patient"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "client is updated",
+            "schema": {
+              "$ref": "#/definitions/patient"
+            }
+          }
+        }
+      }
+    },
+    "/doctors": {
+      "post": {
+        "tags": [
+          "Medical Personnel Account"
+        ],
+        "description": "Create new medical personnel in system, required fields: imageURL, imageId, firstName, lastName, nin, specialization, postAddress, dob, city, phone, password, priceRate",
+        "parameters": [
+          {
+            "name": "doctors",
+            "in": "body",
+            "description": "Medical personnel that  want to create an account",
+            "schema": {
+              "$ref": "#/definitions/doctor"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "201": {
+            "description": "Medical Personnel successfully created",
+            "schema": {
+              "$ref": "#/definitions/doctor"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Medical Personnel Account"
+        ],
+        "summary": "Get all medical personnel in system",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/doctor"
+            }
+          }
+        }
+      }
+    },
+    "/doctors/me": {
+      "get": {
+        "tags": [
+          "Medical Personnel Account"
+        ],
+        "summary": "Get currently logged in medical personnel in system",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/doctor"
+            }
+          }
+        }
+      }
+    },
+    "/doctors/{userId}": {
+      "get": {
+        "tags": [
+          "Medical Personnel Account"
+        ],
+        "summary": "Get medical personnel with given ID",
+        "responses": {
+          "200": {
+            "description": "User is found",
+            "schema": {
+              "$ref": "#/definitions/doctor"
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete medical personnel with given ID",
+        "tags": [
+          "Medical Personnel Account"
+        ],
+        "responses": {
+          "200": {
+            "description": "Medical Personnel is deleted",
+            "schema": {
+              "$ref": "#/definitions/doctor"
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update medical personnel with give ID",
+        "tags": [
+          "Medical Personnel Account"
+        ],
+        "parameters": [
+          {
+            "name": "doctor",
+            "in": "body",
+            "description": "Medical personnel with new values of properties: city. postAddress, password, priceRate, isAvailable, isActive",
+            "schema": {
+              "$ref": "#/definitions/doctor"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "medical personnel is updated",
+            "schema": {
+              "$ref": "#/definitions/doctor"
+            }
+          }
+        }
+      }
+    },
+    "/upload": {
+      "put": {
+        "summary": "Update default imageURL and imageId in the doctor's model with the uploaded image",
+        "tags": [
+          "Medical Personnel Account"
+        ],
+        "parameters": [
+          {
+            "name": "upload",
+            "in": "body",
+            "description": "Medical Personnel with new values of properties: imageId. imageURL",
+            "schema": {
+              "$ref": "#/definitions/doctor"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Profile Image Succcessfully Uploaded",
+            "schema": {
+              "$ref": "#/definitions/doctor"
+            }
+          }
+        }
+      }
+    },
+    "/specializations": {
+      "post": {
+        "tags": [
+          "Specializations"
+        ],
+        "description": "Create new specialization e.g Nurse",
+        "parameters": [
+          {
+            "name": "specializations",
+            "in": "body",
+            "description": "Create new specialization",
+            "schema": {
+              "$ref": "#/definitions/specialization"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "201": {
+            "description": "Specialization successfully created",
+            "schema": {
+              "$ref": "#/definitions/specialization"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Specializations"
+        ],
+        "summary": "Get all specializations in system",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/specialization"
+            }
+          }
+        }
+      }
+    },
+    "/specializations/{Id}": {
+      "get": {
+        "tags": [
+          "Specializations"
+        ],
+        "summary": "Get specialization with given ID",
+        "responses": {
+          "200": {
+            "description": "Specialization is found",
+            "schema": {
+              "$ref": "#/definitions/specialization"
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete specialization with given ID",
+        "tags": [
+          "Specializations"
+        ],
+        "responses": {
+          "200": {
+            "description": "specialization is deleted",
+            "schema": {
+              "$ref": "#/definitions/specialization"
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update Specialization with give ID",
+        "tags": [
+          "Specializations"
+        ],
+        "parameters": [
+          {
+            "name": "specialization",
+            "in": "body",
+            "description": "Specialization with new name",
+            "schema": {
+              "$ref": "#/definitions/specialization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Specialization is updated",
+            "schema": {
+              "$ref": "#/definitions/specialization"
+            }
+          }
+        }
+      }
+    },
+    "/heathServices": {
+      "post": {
+        "tags": [
+          "Hire Medical Personnel"
+        ],
+        "description": "Client hires a medical personnel",
+        "parameters": [
+          {
+            "name": "healthServices",
+            "in": "body",
+            "description": "Create new appointment between client and medical personnel",
+            "schema": {
+              "$ref": "#/definitions/healthService"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "201": {
+            "description": "Medical personnel successfully hired by client",
+            "schema": {
+              "$ref": "#/definitions/healthService"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Hire Medical Personnel"
+        ],
+        "summary": "Get all completed hire of medical personnel",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/heathService"
+            }
+          }
+        }
+      }
+    },
+    "/healthService/{Id}": {
+      "get": {
+        "tags": [
+          "Hire Medical Personnel"
+        ],
+        "summary": "Get a given hire of medical personnel with given ID",
+        "responses": {
+          "200": {
+            "description": "Completed hire of medical personnel is found",
+            "schema": {
+              "$ref": "#/definitions/healthService"
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete completed hire with given ID",
+        "tags": [
+          "Hire Medical Personnel"
+        ],
+        "responses": {
+          "200": {
+            "description": "Completed hire is deleted",
+            "schema": {
+              "$ref": "#/definitions/healthService"
+            }
+          }
+        }
+      }
+    },
+    "/auth": {
+      "post": {
+        "tags": [
+          "Login in User Account"
+        ],
+        "description": "Login for all User types: client, medical personnel, admins",
+        "parameters": [
+          {
+            "name": "Users",
+            "in": "body",
+            "description": "Users login into their Account",
+            "schema": {
+              "$ref": "#/definitions/user"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "User Successfully logged in",
+            "schema": {
+              "$ref": "#/definitions/user"
+            }
+          }
+        }
+      }
+    }
+  },
+  
+  "definitions": {
+    "patient": {
+      "required": [
+        "name",
+        "phone",
+        "location",
+        "password",
+        "dob"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "uniqueItems": false
+        },
+        "phone": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "location": {
+          "type": "string",
+          "uniqueItems": false
+        },
+        "password": {
+          "type": "string",
+          "uniqueItems": false
+        },
+        "dob": {
+          "type": "Date",
+          "uniqueItems": false
+        },
+        "registeredOn": {
+          "type": "boolean"
+        }
+      }
+    },
+    "doctor": {
+      "required": [
+        "imageURL",
+        "imageId",
+        "firstName",
+        "lastName",
+        "nin",
+        "specialization",
+        "postAddress",
+        "dob",
+        "city",
+        "phone",
+        "password",
+        "priceRate"
+      ],
+      "properties": {
+        "imageURL": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "imageId": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "firstName": {
+          "type": "string",
+          "uniqueItems": false
+        },
+        "lastName": {
+          "type": "string",
+          "uniqueItems": false
+        },
+        "nin": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "specialization": {
+          "type": "string",
+          "uniqueItems": false
+        },
+        "postAddress": {
+          "type": "string",
+          "uniqueItems": false
+        },
+        "city": {
+          "type": "string",
+          "uniqueItems": false
+        },
+        "priceRate": {
+          "type": "string",
+          "uniqueItems": false
+        },
+        "phone": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "location": {
+          "type": "string",
+          "uniqueItems": false
+        },
+        "password": {
+          "type": "string",
+          "uniqueItems": false
+        },
+        "dob": {
+          "type": "Date",
+          "uniqueItems": false
+        },
+        "isAvailable": {
+          "type": "boolean"
+        },
+        "isActive": {
+          "type": "boolean"
+        },
+        "registeredOn": {
+          "type": "date",
+          "default": "true"
+        },
+        "isAdmin": {
+          "type": "boolean"
+        },
+        "everHired": {
+          "type": "boolean"
+        }
+      }
+    },
+    "specialization": {
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "uniqueItems": true
+        }
+      }
+    },
+    "healthService": {
+      "required": [
+        "patientId",
+        "doctorId"
+      ],
+      "properties": {
+        "patientId": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "doctorId": {
+          "type": "string",
+          "uniqueItems": true
+        }
+      }
+    },
+    "user": {
+      "required": [
+        "phone",
+        "password"
+      ],
+      "properties": {
+        "phone": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "password": {
+          "type": "string",
+          "uniqueItems": false
+        }
+      }
+    }
+  }
+}

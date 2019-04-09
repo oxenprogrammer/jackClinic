@@ -70,7 +70,7 @@ router.put('/:id', [authMiddleware, isActive], asyncMiddleware(async (req, res) 
             { 
               postalAddress: req.body.postalAddress,
               city: req.body.city,
-              phone: req.body.phone,
+              // phone: req.body.phone,
               password: req.body.password,
               priceRate: req.body.priceRate,
               isAvailable: req.body.isAvailable,

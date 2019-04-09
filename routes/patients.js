@@ -61,7 +61,7 @@ router.put('/:id', authMiddleware, asyncMiddleware(async (req, res) => {
             { 
               name: req.body.name,
               location: req.body.location,
-              phone: req.body.phone,
+              // phone: req.body.phone,
               password: req.body.password
             }, { new: true });
         
