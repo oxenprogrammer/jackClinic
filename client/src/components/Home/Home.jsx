@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import CountUp from 'react-countup';
+import { Waypoint } from 'react-waypoint';
 import './Home.css'
 import { Footer } from '../Shared/Shared';
 

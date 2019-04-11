@@ -91,6 +91,7 @@ class ClientDashboard extends Component {
                                                 
                                             </MDBMedia>
                                             <h6>{listing.specialization}</h6>
+                                            <h5>{listing.city}</h5>
                                             {listing.biography}
                                         </MDBMedia>
                                     </MDBMedia>

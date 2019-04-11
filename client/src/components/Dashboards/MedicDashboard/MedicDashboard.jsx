@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import Topnav from '../Topnav/Topnav';
 import Sidenav from '../Sidenav/Sidenav';
-import { MDBCard, MDBCardBody, MDBIcon, MDBRow, MDBCol, MDBCardText } from 'mdbreact';
+import { MDBCard, MDBCardBody, MDBIcon, MDBRow, MDBCol, MDBCardText, Alert } from 'mdbreact';
 import { MDBListGroup, MDBListGroupItem, MDBContainer } from "mdbreact";
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
+import CircularIntegration from './Available';
+
+
 
 
 
@@ -42,6 +45,7 @@ class MedicDashboard extends Component {
         this.onToggle = this.onToggle.bind(this);
         this.toggleAvailability = this.toggleAvailability.bind(this);
         this.getAvailabity = this.getAvailabity.bind(this);
+        // this.showAlert = this.showAlert.bind(this)
     }
 
 
@@ -104,6 +108,9 @@ class MedicDashboard extends Component {
         const thisApp = this;
         thisApp.getAvailabity();
     }
+    // showAlert(){
+    //     window.alert("i am working")
+    // }
 
 
     render() {
@@ -241,6 +248,7 @@ class MedicDashboard extends Component {
 
                                         </FormGroup>
                                         <button className="btn btn-primary" type="submit">Update Availability</button>
+                                        
                                         
 
                                         

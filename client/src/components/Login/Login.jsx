@@ -82,7 +82,7 @@ class Login extends Component {
                     title: 'Signed in successfully'
                   })
                   setTimeout(() => {
-                    // window.location.href="/login"
+                    window.location.href="/"
                   }, 3000);
 
             }
