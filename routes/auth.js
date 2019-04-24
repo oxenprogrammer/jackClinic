@@ -22,12 +22,22 @@ router.post('/', asyncMiddleware(async (req, res) => {
         validPassword = await bcrypt.compare(req.body.password, doctor.password);
         if (!validPassword) return res.status(400).send({'message': `Invalid phone or password`});
         token = doctor.generateAuthToken();
-        res.header('x-auth-token', token).send({'access_token': token});
+        res.header('x-auth-token', token).send({
+            'access_token': token,
+            'name': `${doctor.firstName} ${doctor.lastName}`,
+            'phone': doctor.phone,
+            'location': doctor.city
+        });
     } else if (patient) {
         validPassword = await bcrypt.compare(req.body.password, patient.password);
         if (!validPassword) return res.status(400).send({'message': `Invalid phone or password`});
         token = patient.generateAuthToken();
-        res.header('x-auth-token', token).send({'access_token': token});
+        res.header('x-auth-token', token).send({
+            'access_token': token,
+            'name': `${patient.name}`,
+            'phone': patient.phone,
+            'location': patient.location
+        });
     } else {
         return res.status(400).send({'message': `Invalid phone or password`});
     }
