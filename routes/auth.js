@@ -26,7 +26,8 @@ router.post('/', asyncMiddleware(async (req, res) => {
             'access_token': token,
             'name': `${doctor.firstName} ${doctor.lastName}`,
             'phone': doctor.phone,
-            'location': doctor.city
+            'location': doctor.city,
+            'isAdmin': doctor.isAdmin
         });
     } else if (patient) {
         validPassword = await bcrypt.compare(req.body.password, patient.password);
@@ -36,7 +37,8 @@ router.post('/', asyncMiddleware(async (req, res) => {
             'access_token': token,
             'name': `${patient.name}`,
             'phone': patient.phone,
-            'location': patient.location
+            'location': patient.location,
+            'isAdmin': 'client'
         });
     } else {
         return res.status(400).send({'message': `Invalid phone or password`});

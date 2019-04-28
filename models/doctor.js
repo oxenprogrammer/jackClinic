@@ -98,7 +98,7 @@ const doctorSchema = new mongoose.Schema({
 })
 
 doctorSchema.methods.generateAuthToken = function() {
-    return jwt.sign({ _id: this._id, isAdmin: this.isAdmin, isActive: this.isActive}, config.get('authJWTPrivateKey'));
+    return jwt.sign({ _id: this._id, isAdmin: this.isAdmin, isActive: this.isActive}, config.get('authJWTPrivateKey'), {expiresIn: '1h'});
 };
 
 const Doctor = mongoose.model('Doctor', doctorSchema);
