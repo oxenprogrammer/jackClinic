@@ -35,9 +35,5 @@ async function generateRefreshToken(req, res, next) {
 }
 
 module.exports = {
-    // generateAccessToken: generateAccessToken,
     generateRefreshToken: generateRefreshToken,
-    // rejectToken: rejectToken,
-    // validateRefreshToken: validateRefreshToken,
-    // checkLogin: checkLogin
   };
