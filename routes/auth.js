@@ -3,6 +3,8 @@ const _ = require('lodash');
 const bcrypt = require('bcrypt');
 const asyncMiddleware = require('../middleware/async');
 const refreshToken = require('../middleware/refreshToken');
+const authMiddleware = require('../middleware/authMiddleware');
+const admin = require('../middleware/admin');
 const { Doctor } = require('../models/doctor');
 const { Patient } = require('../models/patient');
 const Joi = require('joi');
@@ -71,7 +73,7 @@ router.post('/refreshToken', asyncMiddleware(async (req, res) => {
     }
 }));
 
-router.put('/removeRefreshToken', asyncMiddleware(async (req, res) => {
+router.put('/removeRefreshToken', [authMiddleware, admin], asyncMiddleware(async (req, res) => {
     let doctor = await Doctor.findOne({phone: req.body.phone});
     let patient = await Patient.findOne({phone: req.body.phone});
     const refreshToken = {$set: {refreshToken: ''}};
