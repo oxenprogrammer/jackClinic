@@ -4,6 +4,11 @@ const mongoose = require('mongoose');
 const { specSchema } = require('./specialization');
 const jwt = require('jsonwebtoken');
 const config = require('config');
+const crypto = require('crypto');
+
+generateRefreshToken = function() {
+    return jwt.sign({ _id: this._id, isAdmin: this.isAdmin, isActive: this.isActive}, config.get('authJWTPrivateKey'), {expiresIn: '24h'});
+};
 
 const doctorSchema = new mongoose.Schema({
     imageURL: {
@@ -85,6 +90,10 @@ const doctorSchema = new mongoose.Schema({
     isAdmin: {
         type: Boolean,
         default: false
+    },
+    refreshToken: {
+        type: String,
+        default: ''
     }
     // roles: {
     //     type: [

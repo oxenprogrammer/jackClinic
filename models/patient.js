@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const config = require('config');
 
+
 const patientSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -37,6 +38,10 @@ const patientSchema = new mongoose.Schema({
     registeredOn: {
         type: Date,
         default: Date.now
+    },
+    refreshToken: {
+        type: String,
+        default: ''
     }
 });
 

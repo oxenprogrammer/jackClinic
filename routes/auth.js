@@ -2,13 +2,14 @@
 const _ = require('lodash');
 const bcrypt = require('bcrypt');
 const asyncMiddleware = require('../middleware/async');
+const refreshToken = require('../middleware/refreshToken');
 const { Doctor } = require('../models/doctor');
 const { Patient } = require('../models/patient');
 const Joi = require('joi');
 const express = require('express');
 const router = express.Router();
 
-router.post('/', asyncMiddleware(async (req, res) => {
+router.post('/', refreshToken.generateRefreshToken, asyncMiddleware(async (req, res) => {
     const { error } = validate(req.body); 
     if (error) return res.status(400).send(error.details[0].message);
 
@@ -27,7 +28,8 @@ router.post('/', asyncMiddleware(async (req, res) => {
             'name': `${doctor.firstName} ${doctor.lastName}`,
             'phone': doctor.phone,
             'location': doctor.city,
-            'isAdmin': doctor.isAdmin
+            'isAdmin': doctor.isAdmin,
+            'refreshToken': doctor.refreshToken
         });
     } else if (patient) {
         validPassword = await bcrypt.compare(req.body.password, patient.password);
@@ -38,7 +40,8 @@ router.post('/', asyncMiddleware(async (req, res) => {
             'name': `${patient.name}`,
             'phone': patient.phone,
             'location': patient.location,
-            'isAdmin': 'client'
+            'isAdmin': 'client',
+            'refreshToken': patient.refreshToken
         });
     } else {
         return res.status(400).send({'message': `Invalid phone or password`});
