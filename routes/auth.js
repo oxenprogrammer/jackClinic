@@ -50,6 +50,27 @@ router.post('/', refreshToken.generateRefreshToken, asyncMiddleware(async (req, 
     })
 );
 
+router.post('/refreshToken', asyncMiddleware(async (req, res) => {
+    let doctorRefreshToken = await Doctor.findOne({refreshToken: req.body.refreshToken});
+    let patientRefreshToken = await Patient.findOne({refreshToken: req.body.refreshToken});
+    let token;
+   
+    
+    if (doctorRefreshToken) {
+        token = doctorRefreshToken.generateAuthToken();
+        res.header('x-auth-token', token).send({
+            'access_token': token
+        });
+    } else if (patientRefreshToken) {
+        token = patientRefreshToken.generateAuthToken();
+        res.header('x-auth-token', token).send({
+            'access_token': token
+        });
+    } else {
+        return res.status(401).send({'message': `No valid token found`});
+    }
+}))
+
 function validate(req) {
     const schema = {
         phone: Joi.string().min(10).max(13).required(),
