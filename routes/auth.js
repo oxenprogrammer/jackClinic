@@ -69,7 +69,22 @@ router.post('/refreshToken', asyncMiddleware(async (req, res) => {
     } else {
         return res.status(401).send({'message': `No valid token found`});
     }
-}))
+}));
+
+router.put('/removeRefreshToken', asyncMiddleware(async (req, res) => {
+    let doctor = await Doctor.findOne({phone: req.body.phone});
+    let patient = await Patient.findOne({phone: req.body.phone});
+    const refreshToken = {$set: {refreshToken: ''}};
+    if (doctor) {
+        doctor.update(refreshToken, {new: true});
+        res.status(200).send(doctor);
+    } else if (patient) {
+        patient.update(refreshToken, {new: true});
+        res.status(200).send(patient);
+    } else {
+        return res.status(400).send({'message': 'Something when wrong'});
+    }
+}));
 
 function validate(req) {
     const schema = {
