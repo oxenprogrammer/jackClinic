@@ -8,3 +8,5 @@ The doctor/medical personal continues consultation with the patient until they a
 - NodeJs
 - ExpressJs
 - Jest
+- Mongoose
+- Mongodb
